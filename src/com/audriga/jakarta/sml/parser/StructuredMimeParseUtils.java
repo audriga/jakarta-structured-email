@@ -113,8 +113,7 @@ public static List<StructuredData> parseStructuredDataFromJsonStr(String jsonCon
             structuredDataList.add(data);
         }
     } else {
-        JSONObject jsonObject = new JSONObject(jsonContent);
-        data = new StructuredData(jsonObject.toString(4), jsonObject);
+        data = new StructuredData(jsonContent);
         structuredDataList.add(data);
     }
     return structuredDataList;

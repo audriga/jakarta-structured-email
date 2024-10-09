@@ -26,6 +26,10 @@ public class StructuredData {
 
     private static final Logger mLogger = Logger.getLogger(StructuredData.class.getName());
 
+    public StructuredData(String body) {
+        this(body, new JSONObject(body));
+    }
+
     /* Assumes JSON-LD syntax by default. */
     public StructuredData(String body, JSONObject json) {
         this(body, json, StructuredSyntax.JSON_LD);
