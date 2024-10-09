@@ -1,0 +1,32 @@
+[
+  {
+    "@context": "http://schema.org/",
+    "@type": "DiscountOffer",
+    "description": "Beer discount - Limited offer",
+    "discountCode": "FREIB13R",
+    "availabilityStarts": "2024-09-30T00:00:00.000",
+    "availabilityEnds": "2024-10-31T00:00:00.000"
+  },
+  {
+    "@context": "http://schema.org/",
+    "@type": "PromotionCard",
+    "image": "https://cdn.pixabay.com/photo/2014/03/25/23/15/beer-298268_1280.png",
+    "url": "https://goget.beer/yummy-version",
+    "headline": "Yummy beer",
+    "price": 0,
+    "priceCurrency": "€",
+    "discountValue": 15,
+    "position": 1
+  },
+  {
+    "@context": "http://schema.org/",
+    "@type": "PromotionCard",
+    "image": "https://cdn.pixabay.com/photo/2013/07/13/12/31/wheat-beer-159789_960_720.png",
+    "url": "https://goget.beer/wheat-version",
+    "headline": "Wheat beer",
+    "price": 0,
+    "priceCurrency": "€",
+    "discountValue": 8,
+    "position": 2
+  }
+]

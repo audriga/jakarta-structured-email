@@ -1,0 +1,7 @@
+jakarta-structured-email.iml
+.idea
+target/
+lib/
+out/
+bin/
+dist/

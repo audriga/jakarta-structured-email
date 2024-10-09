@@ -1,0 +1,31 @@
+{
+    "@context":              "http://schema.org",
+    "@type":                 "EventReservation",
+    "reservationId":         "MBE12345",
+    "underName": {
+        "@type":               "Person",
+        "name":                "Noah Baumbach"
+    },
+    "reservationFor": {
+        "@type":               "Event",
+        "name":                "Make Better Email 2024",
+        "startDate":           "2024-10-15",
+        "organizer": {
+            "@type":            "Organization",
+            "name":             "Fastmail Pty Ltd.",
+            "logo":             "https://www.fastmail.com/assets/images/FM-Logo-RGB-IiFj8alCx1-3073.webp"
+        },
+        "location": {
+            "@type":             "Place",
+            "name":              "Isode Ltd",
+            "address": {
+                "@type":           "PostalAddress",
+                "streetAddress":   "14 Castle Mews",
+                "addressLocality": "Hampton",
+                "addressRegion":   "Greater London",
+                "postalCode":      "TW12 2NP",
+                "addressCountry":  "UK"
+            }
+        }
+    }
+}

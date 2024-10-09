@@ -1,0 +1,49 @@
+Date: Tue, 8 Oct 2024 10:14:11 +0200 (CEST)
+Message-ID: <234223040.31.1728375251185@sadatoni.local>
+Subject: Make Email Better Again!
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	boundary="----=_Part_30_505968231.1728375251183"
+
+------=_Part_30_505968231.1728375251183
+Content-Type: multipart/alternative;
+	boundary="----=_Part_29_828241083.1728375251183"
+
+------=_Part_29_828241083.1728375251183
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+I booked my spot at Better Email 2024. My right, right-hand seat is free, I wish for you to sit next to me. What do you think?
+------=_Part_29_828241083.1728375251183--
+
+------=_Part_30_505968231.1728375251183
+Content-Type: application/ld+json; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+{
+    "reservationFor": {
+        "@type": "Event",
+        "name": "Make Better Email 2024",
+        "location": {
+            "address": {
+                "addressCountry": "GB",
+                "streetAddress": "800 Howard St.",
+                "@type": "PostalAddress",
+                "postalCode": "W1K 1BE",
+                "addressLocality": "London",
+                "addressRegion": "London"
+            },
+            "@type": "Place",
+            "name": "Moscone Center"
+        },
+        "startDate": "2024-10-15"
+    },
+    "@type": "EventReservation",
+    "reservationNumber": "IO12345",
+    "@context": "http://schema.org",
+    "underName": {
+        "@type": "Person",
+        "name": "Noah Baumbach"
+    }
+}
+------=_Part_30_505968231.1728375251183--

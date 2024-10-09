@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+    <settings defaultResolver="local-chain" />
+    <resolvers>
+        <ibiblio name="ibiblio-maven2" m2compatible="true" />
+        <chain name="local-chain">
+            <resolver ref="ibiblio-maven2" />
+        </chain>
+    </resolvers>
+</ivysettings>

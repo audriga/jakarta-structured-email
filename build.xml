@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="jakarta-structured-email" default="jar" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+    <property name="source" location="src"/>
+    <property name="bin" location="bin/"/>
+    <property name="dist-dir"  location="dist"/>
+    <property name="lib-source"  location="lib"/>
+    <property name="main-class" value="com.audriga.jakarta.sml.scanner.cli.CliHandler"/>
+
+    <path id="project.class.path">
+        <pathelement location="${bin}"/>
+        <fileset dir="${lib-source}" includes="*.jar"/>
+    </path>
+
+    <!-- ////////////////////////////////////////////////////////////////// -->
+    <!-- /////////////////////////	TARGETS		///////////////////////// -->
+    <!-- ////////////////////////////////////////////////////////////////// -->
+
+    <target name="compile" depends="resolve" description="Compile java source to bytecode">
+        <mkdir dir="${bin}"/>
+        <javac srcdir="${source}" includes="**" encoding="utf-8"
+               destdir="${bin}"
+               source="1.8" target="1.8">
+            <classpath refid="project.class.path"/>
+        </javac>
+        <copy todir="${bin}">
+            <fileset dir="${source}" excludes="**/*.java"/>
+        </copy>
+    </target>
+
+    <target name="jar" depends="resolve,compile" description="Create a jar file">
+        <mkdir dir="${dist-dir}"/>
+        <jar jarfile="${dist-dir}/__temp.jar">
+            <zipgroupfileset dir="${lib-source}">
+                <include name="**/*.jar" />
+            </zipgroupfileset>
+        </jar>
+        <jar jarfile="${dist-dir}/sml-account-scan.jar" basedir="${bin}">
+            <zipfileset src="${dist-dir}/__temp.jar"/>
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+        </jar>
+    </target>
+
+
+    <target name="clean" description="Cleans this project">
+        <delete dir="${bin}" failonerror="false" />
+        <delete dir="${dist-dir}" failonerror="false" />
+        <delete dir="${lib-source}" failonerror="false" />
+    </target>
+
+
+    <target name="resolve" description="--> retrieve dependencies with ivy">
+        <ivy:retrieve type="jar,bundle" />
+    </target>
+
+    <target name="report">
+        <mkdir dir="report" />
+        <ivy:resolve type="${ivy.resolve.types}"/>
+        <echoproperties/>
+        <ivy:report todir="report" />
+    </target>
+
+    <target name="clean-all" depends="clean" description="Purge ivy cache">
+        <ivy:cleancache/>
+    </target>
+
+</project>

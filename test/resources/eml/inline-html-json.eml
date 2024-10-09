@@ -1,0 +1,77 @@
+Date: Tue, 8 Oct 2024 10:06:47 +0200 (CEST)
+Message-ID: <1441243996.3.1728374807845@sadatoni.local>
+Subject: Make Email Better Again!
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_Part_2_1888639813.1728374807843"
+
+------=_Part_2_1888639813.1728374807843
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Event Reservation</title>
+</head>
+<body>
+<script type="application/ld+json">
+{
+    "reservationFor": {
+        "@type": "Event",
+        "name": "Make Better Email 2024",
+        "location": {
+            "address": {
+                "addressCountry": "GB",
+                "streetAddress": "800 Howard St.",
+                "@type": "PostalAddress",
+                "postalCode": "W1K 1BE",
+                "addressLocality": "London",
+                "addressRegion": "London"
+            },
+            "@type": "Place",
+            "name": "Moscone Center"
+        },
+        "startDate": "2024-10-15"
+    },
+    "@type": "EventReservation",
+    "reservationNumber": "IO12345",
+    "@context": "http://schema.org",
+    "underName": {
+        "@type": "Person",
+        "name": "Noah Baumbach"
+    }
+}
+</script>
+<h1>Event Reservation Confirmation</h1>
+<p>Dear Noah Baumbach,</p>
+<p>Thank you for your reservation. Here are the details:</p>
+<table>
+    <tr>
+        <td><strong>Reservation Number:</strong></td>
+        <td>IO12345</td>
+    </tr>
+    <tr>
+        <td><strong>Event Name:</strong></td>
+        <td>Make Better Email 2024</td>
+    </tr>
+    <tr>
+        <td><strong>Start Date:</strong></td>
+        <td>2024-10-30</td>
+    </tr>
+    <tr>
+        <td><strong>Location:</strong></td>
+        <td>
+            Moscone Center<br>
+            800 Howard St.<br>
+            London, London W1K 1BE<br>
+            GB
+        </td>
+    </tr>
+</table>
+<p>We look forward to seeing you at the event!</p>
+<p>Best regards,<br>The Event Team</p>
+</body>
+</html>
+------=_Part_2_1888639813.1728374807843--
