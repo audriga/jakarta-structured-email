@@ -8,8 +8,8 @@ Jakarta Structured Email provides extensions for the Java [Jakarta Mail](https:/
 - Parse JSON-LD and Microdata
 
 In addition, this project contains
-- An [IMAP account scanner](#IMAP account scanner) which uses this library to extract structured data from messages in an email account
-- A collection of [example EML files generated with this library](#Structured Email example EML files)
+- An [IMAP account scanner](#imap-account-scanner) which uses this library to extract structured data from messages in an email account
+- A collection of [example EML files](#structured-email-example-eml-files) generated with this library
 
 ## Usage
 
