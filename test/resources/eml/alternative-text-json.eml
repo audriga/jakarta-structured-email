@@ -1,11 +1,11 @@
-Date: Tue, 8 Oct 2024 10:12:20 +0200 (CEST)
-Message-ID: <1424788681.17.1728375140397@sadatoni.local>
+Date: Thu, 10 Oct 2024 10:24:42 +0200 (CEST)
+Message-ID: <115397800.39.1728548682695@sadatoni>
 Subject: Make Email Better Again!
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
-	boundary="----=_Part_16_712732521.1728375140396"
+	boundary="----=_Part_38_1627781283.1728548682694"
 
-------=_Part_16_712732521.1728375140396
+------=_Part_38_1627781283.1728548682694
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
@@ -15,47 +15,52 @@ Dear Noah Baumbach,
 
 Thank you for your reservation. Here are the details:
 
-Reservation Number: IO12345
+Reservation Number: MBE12345
 Event Name: Make Better Email 2024
 Start Date: 2024-10-30
 Location:
-    Moscone Center
-    800 Howard St.
-    London, London W1K 1BE
-    GB
+    Isode Ltd
+    14 Castle Mews
+    Hampton TW12 2NP
+    UK
 
 We look forward to seeing you at the event!
 
 Best regards,
 The Event Team
-------=_Part_16_712732521.1728375140396
+------=_Part_38_1627781283.1728548682694
 Content-Type: application/ld+json; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
 {
-    "reservationFor": {
-        "@type": "Event",
-        "name": "Make Better Email 2024",
-        "location": {
-            "address": {
-                "addressCountry": "GB",
-                "streetAddress": "800 Howard St.",
-                "@type": "PostalAddress",
-                "postalCode": "W1K 1BE",
-                "addressLocality": "London",
-                "addressRegion": "London"
-            },
-            "@type": "Place",
-            "name": "Moscone Center"
-        },
-        "startDate": "2024-10-15"
-    },
-    "@type": "EventReservation",
-    "reservationNumber": "IO12345",
-    "@context": "http://schema.org",
+    "@context":              "http://schema.org",
+    "@type":                 "EventReservation",
+    "reservationId":         "MBE12345",
     "underName": {
-        "@type": "Person",
-        "name": "Noah Baumbach"
+        "@type":               "Person",
+        "name":                "Noah Baumbach"
+    },
+    "reservationFor": {
+        "@type":               "Event",
+        "name":                "Make Better Email 2024",
+        "startDate":           "2024-10-15",
+        "organizer": {
+            "@type":            "Organization",
+            "name":             "Fastmail Pty Ltd.",
+            "logo":             "https://www.fastmail.com/assets/images/FM-Logo-RGB-IiFj8alCx1-3073.webp"
+        },
+        "location": {
+            "@type":             "Place",
+            "name":              "Isode Ltd",
+            "address": {
+                "@type":           "PostalAddress",
+                "streetAddress":   "14 Castle Mews",
+                "addressLocality": "Hampton",
+                "addressRegion":   "Greater London",
+                "postalCode":      "TW12 2NP",
+                "addressCountry":  "UK"
+            }
+        }
     }
 }
-------=_Part_16_712732521.1728375140396--
+------=_Part_38_1627781283.1728548682694--

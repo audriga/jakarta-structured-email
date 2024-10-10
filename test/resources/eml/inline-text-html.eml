@@ -1,10 +1,11 @@
-Message-ID: <846274760.11.1728374807886@sadatoni.local>
+Date: Thu, 10 Oct 2024 10:24:42 +0200 (CEST)
+Message-ID: <1510087865.9.1728548682607@sadatoni>
 Subject: Make Email Better Again!
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
-	boundary="----=_Part_10_1381857776.1728374807885"
+	boundary="----=_Part_8_1736293769.1728548682606"
 
-------=_Part_10_1381857776.1728374807885
+------=_Part_8_1736293769.1728548682606
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
@@ -14,20 +15,20 @@ Dear Noah Baumbach,
 
 Thank you for your reservation. Here are the details:
 
-Reservation Number: IO12345
+Reservation Number: MBE12345
 Event Name: Make Better Email 2024
 Start Date: 2024-10-30
 Location:
-    Moscone Center
-    800 Howard St.
-    London, London W1K 1BE
-    GB
+    Isode Ltd
+    14 Castle Mews
+    Hampton TW12 2NP
+    UK
 
 We look forward to seeing you at the event!
 
 Best regards,
 The Event Team
-------=_Part_10_1381857776.1728374807885
+------=_Part_8_1736293769.1728548682606
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
@@ -44,7 +45,7 @@ Content-Transfer-Encoding: 7bit
 <table>
     <tr>
         <td><strong>Reservation Number:</strong></td>
-        <td>IO12345</td>
+        <td>MBE12345</td>
     </tr>
     <tr>
         <td><strong>Event Name:</strong></td>
@@ -57,10 +58,10 @@ Content-Transfer-Encoding: 7bit
     <tr>
         <td><strong>Location:</strong></td>
         <td>
-            Moscone Center<br>
-            800 Howard St.<br>
-            London, London W1K 1BE<br>
-            GB
+            Isode Ltd<br>
+            14 Castle Mews<br>
+            Hampton TW12 2NP<br>
+            UK
         </td>
     </tr>
 </table>
@@ -68,4 +69,4 @@ Content-Transfer-Encoding: 7bit
 <p>Best regards,<br>The Event Team</p>
 </body>
 </html>
-------=_Part_10_1381857776.1728374807885--
+------=_Part_8_1736293769.1728548682606--

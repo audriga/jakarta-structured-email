@@ -10,14 +10,14 @@ public class SimpleEmail {
     static String textBody = "Event Reservation Confirmation\n\n" +
             "Dear Noah Baumbach,\n\n" +
             "Thank you for your reservation. Here are the details:\n\n" +
-            "Reservation Number: IO12345\n" +
+            "Reservation Number: MBE12345\n" +
             "Event Name: Make Better Email 2024\n" +
             "Start Date: 2024-10-30\n" +
             "Location:\n" +
-            "    Moscone Center\n" +
-            "    800 Howard St.\n" +
-            "    London, London W1K 1BE\n" +
-            "    GB\n\n" +
+            "    Isode Ltd\n" +
+            "    14 Castle Mews\n" +
+            "    Hampton TW12 2NP\n" +
+            "    UK\n\n" +
             "We look forward to seeing you at the event!\n\n" +
             "Best regards,\n" +
             "The Event Team";
