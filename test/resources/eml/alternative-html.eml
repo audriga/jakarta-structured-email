@@ -1,11 +1,11 @@
-Date: Tue, 8 Oct 2024 10:12:20 +0200 (CEST)
-Message-ID: <1587872480.15.1728375140389@sadatoni.local>
+Date: Thu, 10 Oct 2024 10:24:42 +0200 (CEST)
+Message-ID: <1340051218.37.1728548682691@sadatoni>
 Subject: Make Email Better Again!
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
-	boundary="----=_Part_14_1541942595.1728375140388"
+	boundary="----=_Part_36_1539038539.1728548682690"
 
-------=_Part_14_1541942595.1728375140388
+------=_Part_36_1539038539.1728548682690
 Content-Type: text/html; charset=utf-8
 Content-Transfer-Encoding: 7bit
 
@@ -22,7 +22,7 @@ Content-Transfer-Encoding: 7bit
 <table>
     <tr>
         <td><strong>Reservation Number:</strong></td>
-        <td>IO12345</td>
+        <td>MBE12345</td>
     </tr>
     <tr>
         <td><strong>Event Name:</strong></td>
@@ -35,10 +35,10 @@ Content-Transfer-Encoding: 7bit
     <tr>
         <td><strong>Location:</strong></td>
         <td>
-            Moscone Center<br>
-            800 Howard St.<br>
-            London, London W1K 1BE<br>
-            GB
+            Isode Ltd<br>
+            14 Castle Mews<br>
+            Hampton TW12 2NP<br>
+            UK
         </td>
     </tr>
 </table>
@@ -46,4 +46,4 @@ Content-Transfer-Encoding: 7bit
 <p>Best regards,<br>The Event Team</p>
 </body>
 </html>
-------=_Part_14_1541942595.1728375140388--
+------=_Part_36_1539038539.1728548682690--
