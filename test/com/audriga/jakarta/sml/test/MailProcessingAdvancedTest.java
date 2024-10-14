@@ -1,9 +1,9 @@
 package com.audriga.jakarta.sml.test;
 
-import com.audriga.jakarta.sml.generator.HtmlOnlyMessageGenerator;
-import com.audriga.jakarta.sml.generator.InlineHtmlMessageGenerator;
 import com.audriga.jakarta.sml.generator.MultipartAlternativeMessageGenerator;
 import com.audriga.jakarta.sml.generator.MultipartRelatedMessageGenerator;
+import com.audriga.jakarta.sml.mime.HtmlOnlyMessageBuilder;
+import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.test.data.MultipartRelatedEmail;
@@ -119,8 +119,11 @@ public class MailProcessingAdvancedTest {
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
         // Generate
-        HtmlOnlyMessageGenerator gen = new HtmlOnlyMessageGenerator();
-        StructuredMimeMessageWrapper message = gen.generate(subject, null, htmlBody, jsonList);
+        StructuredMimeMessageWrapper message = new HtmlOnlyMessageBuilder()
+                        .subject(subject)
+                        .htmlBody(htmlBody)
+                        .structuredData(jsonList)
+                        .build();
         PrintStream out = System.out;
         message.writeTo(out);
 
@@ -138,13 +141,16 @@ public class MailProcessingAdvancedTest {
     @Test
     public void testInlineHtmlGeneratorWithJsonLdInHead() throws MessagingException, IOException {
         // Generate
-        InlineHtmlMessageGenerator gen = new InlineHtmlMessageGenerator();
-        String subject = SimpleEmail.getSubject();
-        String textBody = SimpleEmail.getTextBody();
-        String htmlBody = SimpleEmail.getHtmlBody();
         List<StructuredData> json = SimpleEmail.getJson();
+        StructuredMimeMessageWrapper message = new InlineHtmlMessageBuilder()
+                .subject(SimpleEmail.getSubject())
+                .textBody(SimpleEmail.getTextBody())
+                .htmlBody(SimpleEmail.getHtmlBody())
+                .structuredData(SimpleEmail.getJson())
+                .htmlTag("head")
+                .htmlLast(true)
+                .build();
 
-        StructuredMimeMessageWrapper message = gen.generate(subject, textBody, htmlBody, json, "head", true);
         PrintStream out = System.out;
         message.writeTo(out);
 

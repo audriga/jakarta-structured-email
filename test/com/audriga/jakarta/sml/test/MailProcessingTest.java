@@ -1,5 +1,5 @@
 package com.audriga.jakarta.sml.test;
-import com.audriga.jakarta.sml.generator.InlineHtmlMessageGenerator;
+import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.test.data.SimpleEmail;
@@ -47,13 +47,12 @@ public class MailProcessingTest {
         List<StructuredData> structuredDataList = new ArrayList<>();
         structuredDataList.add(new StructuredData(jsonLd));
 
-        InlineHtmlMessageGenerator generator = new InlineHtmlMessageGenerator();
-        StructuredMimeMessageWrapper message = generator.generate(
-                emailSubject,
-                textEmailBody,
-                htmlEmailBody,
-                structuredDataList
-        );
+        StructuredMimeMessageWrapper message = new InlineHtmlMessageBuilder()
+                .subject(emailSubject)
+                .textBody(textEmailBody)
+                .htmlBody(htmlEmailBody)
+                .structuredData(structuredDataList)
+                .build();
 
         assertEquals(message.getTextBody().getText(), textEmailBody, "Text of generated message should be equal to the parsed message");
         assertEquals(message.getStructuredData().get(0).getBody(), jsonLd, "Structured data body should match the input");
@@ -68,8 +67,13 @@ public class MailProcessingTest {
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
         // Generate
-        InlineHtmlMessageGenerator gen = new InlineHtmlMessageGenerator();
-        StructuredMimeMessageWrapper message = gen.generate(subject, textBody, htmlBody, jsonList, null, htmlLast);
+        StructuredMimeMessageWrapper message = new InlineHtmlMessageBuilder()
+                .subject(subject)
+                .textBody(textBody)
+                .htmlBody(htmlBody)
+                .structuredData(jsonList)
+                .htmlLast(htmlLast)
+                .build();
         PrintStream out = System.out;
         message.writeTo(out);
 

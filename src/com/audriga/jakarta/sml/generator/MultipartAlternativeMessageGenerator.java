@@ -1,9 +1,8 @@
 package com.audriga.jakarta.sml.generator;
 
+import com.audriga.jakarta.sml.mime.GenericStructuredMessageBuilder;
 import com.audriga.jakarta.sml.mime.MimeMultipartBuilder;
-import com.audriga.jakarta.sml.model.MimeTextContent;
 import com.audriga.jakarta.sml.model.StructuredData;
-import com.audriga.jakarta.sml.mime.StructuredMimeMessageBuilder;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import jakarta.mail.MessagingException;
 
@@ -36,12 +35,12 @@ public class MultipartAlternativeMessageGenerator implements StructuredMimeMessa
             multipartBuilder.addBodyPartJsonLd(structuredDataPart, "utf-8");
         }
 
-        return new StructuredMimeMessageBuilder()
+        return new GenericStructuredMessageBuilder()
                 .subject(subject)
                 .content(multipartBuilder.build())
-                .structuredData(structuredDataPart)
-                .plainText(new MimeTextContent(textBody, "utf-8"))
-                .htmlText(new MimeTextContent(htmlBody, "utf-8"))
+                .structuredData(structuredData)
+                .textBody(textBody)
+                .htmlBody(htmlBody)
                 .build();
     }
 }

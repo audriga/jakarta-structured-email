@@ -24,9 +24,9 @@ The goal of this library is to support and showcase multiple possible approaches
 To create structured email messages, simply use the generator to create a MIME message with structured data included in the HTML body via `<script>` tag:
 
 ```java
-import com.audriga.jakarta.sml.generator.InlineHtmlMessageGenerator;
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
 import jakarta.mail.MessagingException;
 
 import java.util.ArrayList;
@@ -47,13 +47,12 @@ public class Example {
         List<StructuredData> structuredDataList = new ArrayList<>();
         structuredDataList.add(new StructuredData(jsonLd));
             
-        InlineHtmlMessageGenerator generator = new InlineHtmlMessageGenerator();
-        StructuredMimeMessageWrapper message = generator.generate(
-                emailSubject,
-                textEmailBody,
-                htmlEmailBody,
-                structuredDataList
-        );
+        StructuredMimeMessageWrapper message = new InlineHtmlMessageBuilder()
+                .subject(emailSubject)
+                .textBody(textEmailBody)
+                .htmlBody(htmlEmailBody)
+                .structuredData(structuredDataList)
+                .build();
 
         // Use the message as needed
     }
