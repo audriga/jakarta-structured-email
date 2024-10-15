@@ -156,4 +156,12 @@ public class StructuredMimeMessageWrapper {
     public void getRecipients(Message.RecipientType type) throws MessagingException {
         mm.getRecipients(type);
     }
+
+    public void setReplyTo(Address[] addresses) throws MessagingException {
+        mm.setReplyTo(addresses);
+    }
+
+    public Address[] getReplyTo() throws MessagingException {
+        return mm.getReplyTo();
+    }
 }
