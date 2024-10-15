@@ -1,21 +1,12 @@
-package com.audriga.jakarta.sml.mime;
+package com.audriga.jakarta.sml.parser;
 
-import com.audriga.jakarta.sml.parser.StructuredMimeParseUtils;
-import jakarta.mail.BodyPart;
-import jakarta.mail.Message;
+import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMultipart;
-import org.apache.commons.io.IOUtils;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Logger;
 
