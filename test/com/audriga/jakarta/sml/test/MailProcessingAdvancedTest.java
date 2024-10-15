@@ -1,9 +1,9 @@
 package com.audriga.jakarta.sml.test;
 
-import com.audriga.jakarta.sml.generator.MultipartAlternativeMessageGenerator;
 import com.audriga.jakarta.sml.generator.MultipartRelatedMessageGenerator;
 import com.audriga.jakarta.sml.mime.HtmlOnlyMessageBuilder;
 import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
+import com.audriga.jakarta.sml.mime.MultipartAlternativeMessageBuilder;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.test.data.MultipartRelatedEmail;
@@ -65,8 +65,13 @@ public class MailProcessingAdvancedTest {
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
         // Generate
-        MultipartAlternativeMessageGenerator gen = new MultipartAlternativeMessageGenerator();
-        StructuredMimeMessageWrapper message = gen.generate(subject, textBody, htmlBody, jsonList, htmlLast);
+        StructuredMimeMessageWrapper message = new MultipartAlternativeMessageBuilder()
+                .subject(subject)
+                .textBody(textBody)
+                .htmlBody(htmlBody)
+                .structuredData(jsonList)
+                .htmlLast(htmlLast)
+                .build();
         PrintStream out = System.out;
         message.writeTo(out);
 
