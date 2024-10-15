@@ -47,7 +47,9 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
     }
 
     public T htmlBody(String htmlBody) {
-        this.htmlBody = new MimeTextContent(htmlBody, "utf-8");
+        if (htmlBody != null) {
+            this.htmlBody = new MimeTextContent(htmlBody, "utf-8");
+        }
         return self();
     }
 
@@ -82,9 +84,12 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
     }
 
     // TODO move to dedicated child class?
-    protected static String insertJsonLdInHtml(String html, StructuredData structuredData, String htmlTag) {
-        if (structuredData == null || html == null) {
-            return html;
+    protected static String insertJsonLdInHtml(MimeTextContent htmlContent, StructuredData structuredData, String htmlTag) {
+        if (htmlContent == null) {
+            return null;
+        }
+        if (structuredData == null) {
+            return htmlContent.getText();
         }
 
         if (htmlTag == null) {
@@ -92,6 +97,8 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
         } else {
             htmlTag = "<" + htmlTag + ">";
         }
+
+        String html = htmlContent.getText();
         int index = html.indexOf(htmlTag);
         if (index != -1) {
             int insertPosition = index + htmlTag.length();

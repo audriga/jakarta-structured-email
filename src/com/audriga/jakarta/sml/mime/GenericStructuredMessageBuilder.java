@@ -18,7 +18,9 @@ public class GenericStructuredMessageBuilder extends AbstractMessageBuilder<Gene
     }
 
     public GenericStructuredMessageBuilder textBody(String textBody) {
-        this.textBody = new MimeTextContent(textBody, "utf-8");
+        if (textBody != null) {
+            this.textBody = new MimeTextContent(textBody, "utf-8");
+        }
         return self();
     }
 
@@ -34,8 +36,12 @@ public class GenericStructuredMessageBuilder extends AbstractMessageBuilder<Gene
         StructuredMimeMessageWrapper sm = new StructuredMimeMessageWrapper(session);
 
         MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
-        multipartBuilder.addBodyPartText(textBody.getText(), textBody.getEncoding());
-        multipartBuilder.addBodyPartHtml(htmlBody.getText(), htmlBody.getEncoding());
+        if (textBody != null) {
+            multipartBuilder.addBodyPartText(textBody);
+        }
+        if (htmlBody != null) {
+            multipartBuilder.addBodyPartHtml(htmlBody);
+        }
         sm.resetContent(multipartBuilder.build());
 
         if (subject != null) {

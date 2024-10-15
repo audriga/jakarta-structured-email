@@ -24,7 +24,7 @@ public class HtmlOnlyMessageBuilder extends AbstractMessageBuilder<HtmlOnlyMessa
     @Override
     public StructuredMimeMessageWrapper build() throws MessagingException {
         StructuredData jsonStructuredData = checkStructuredDataToInsert(structuredData);
-        String html = insertJsonLdInHtml(htmlBody.getText(), jsonStructuredData, htmlTag);
+        String html = insertJsonLdInHtml(htmlBody, jsonStructuredData, htmlTag);
 
         Properties properties = System.getProperties();
         Session session = Session.getDefaultInstance(properties, null);

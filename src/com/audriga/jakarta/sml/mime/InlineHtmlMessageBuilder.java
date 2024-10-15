@@ -15,7 +15,9 @@ public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlM
     private boolean htmlLast = true;
 
     public InlineHtmlMessageBuilder textBody(String textBody) {
-        this.textBody = new MimeTextContent(textBody, "utf-8");
+        if (textBody != null) {
+            this.textBody = new MimeTextContent(textBody, "utf-8");
+        }
         return self();
     }
 
@@ -37,7 +39,7 @@ public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlM
     @Override
     public StructuredMimeMessageWrapper build() throws MessagingException {
         StructuredData jsonStructuredData = checkStructuredDataToInsert(structuredData);
-        String html = insertJsonLdInHtml(htmlBody.getText(), jsonStructuredData, htmlTag);
+        String html = insertJsonLdInHtml(htmlBody, jsonStructuredData, htmlTag);
 
         Properties properties = System.getProperties();
         Session session = Session.getDefaultInstance(properties, null);
@@ -45,11 +47,15 @@ public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlM
 
         MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
         if (htmlLast) {
-            multipartBuilder.addBodyPartText(textBody.getText(), textBody.getEncoding());
-            multipartBuilder.addBodyPartHtml(html, htmlBody.getEncoding());
+            multipartBuilder.addBodyPartText(textBody);
+            if (html != null) {
+                multipartBuilder.addBodyPartHtml(new MimeTextContent(html, "utf-8"));
+            }
         } else {
-            multipartBuilder.addBodyPartHtml(html, htmlBody.getEncoding());
-            multipartBuilder.addBodyPartText(textBody.getText(), textBody.getEncoding());
+            if (html != null) {
+                multipartBuilder.addBodyPartHtml(new MimeTextContent(html, "utf-8"));
+            }
+            multipartBuilder.addBodyPartText(textBody);
         }
         sm.resetContent(multipartBuilder.build());
 
