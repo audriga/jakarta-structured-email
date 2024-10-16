@@ -4,7 +4,6 @@ import com.audriga.jakarta.sml.mime.*;
 import com.audriga.jakarta.sml.model.StructuredData;
 import jakarta.mail.*;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +14,19 @@ import java.util.logging.Logger;
 public class EmailSender {
     private static final Logger mLogger = Logger.getLogger(EmailSender.class.getName());
     private final Session session;
-    private final Properties properties = new Properties();
+    private Properties properties = new Properties();
 
     public EmailSender() {
         Properties properties = System.getProperties();
         session = Session.getDefaultInstance(properties, null);
     }
 
-    public EmailSender(String propertiesFilePath) throws IOException {
-        try (FileInputStream input = new FileInputStream(propertiesFilePath)) {
-            properties.load(input);
-        }
+    public EmailSender(Properties props) throws IOException {
+        properties = props;
         this.session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(properties.getProperty("mail.user"), properties.getProperty("smtps.password"));
+                return new PasswordAuthentication(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
             }
         });
     }
@@ -121,4 +118,5 @@ public class EmailSender {
         Transport transport = session.getTransport();
         transport.send(message.getMimeMessage());
     }
+
 }
