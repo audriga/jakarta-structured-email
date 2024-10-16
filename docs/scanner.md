@@ -8,7 +8,11 @@ Its goal is to **find existing messages which contain Schema.org markup** (JSON-
 
 ## Building
 
-See build instructions in the [main README](../README.md#Building)
+To build the project, use the following command to create the `sml-account-scan.jar` file under `dist/`:
+
+```shell
+ant jar-scanner
+```
 
 ## Running
 

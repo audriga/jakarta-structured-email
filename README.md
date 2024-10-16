@@ -112,6 +112,11 @@ This project contains an IMAP account scanner command line tool, which can be us
 
 The folder `test/resources/eml` contains several example files generated with this library. Refer to the [example files documentation](docs/example-files.md) for more information.
 
+### H2LJ
+
+Part of the source code of this project can be built as a separate JAR. This can be used to extract structured data
+from HTML input. It is called Html2JSONLD (Java). See the [H2LJ documentation](docs/h2lj.md) for details.
+
 ## Contributing
 
 Contributions are welcome! Please open new issues or pull requests on GitHub.
