@@ -1,5 +1,6 @@
 package com.audriga.jakarta.sml.mime;
 
+import com.audriga.jakarta.sml.model.MimeTextContent;
 import com.audriga.jakarta.sml.model.StructuredData;
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;
@@ -52,27 +53,48 @@ public class MimeMultipartBuilder {
 		m.addBodyPart(bodyPart);
 		return this;
 	}
-	
-	public MimeMultipartBuilder addBodyPartText(String text, String textEncoding) throws MessagingException {
-		if (text == null) {
+
+	public MimeMultipartBuilder addBodyPartText(String text) throws MessagingException {
+		if (text != null) {
+			return addBodyPartText(new MimeTextContent(text, "utf-8"));
+		}
+		return this;
+	}
+
+	public MimeMultipartBuilder addBodyPartText(MimeTextContent textContent) throws MessagingException {
+		if (textContent == null) {
 			return this;
 		}
 		MimeBodyPart bodyPart = new MimeBodyPart();
-		String bodyPartType = "text/plain; charset=" + textEncoding;
-		bodyPart.setContent(text, bodyPartType);
+		String bodyPartType = "text/plain; charset=" + textContent.getEncoding();
+		bodyPart.setContent(textContent.getText(), bodyPartType);
 		m.addBodyPart(bodyPart);
 		return this;
 	}
-	
-	public MimeMultipartBuilder addBodyPartHtml(String htmlText, String htmlTextEncoding) throws MessagingException {
-		if (htmlText == null) {
+
+	public MimeMultipartBuilder addBodyPartHtml(String html) throws MessagingException {
+		if (html != null) {
+			return addBodyPartText(new MimeTextContent(html, "utf-8"));
+		}
+		return this;
+	}
+
+	public MimeMultipartBuilder addBodyPartHtml(MimeTextContent htmlContent) throws MessagingException {
+		if (htmlContent == null) {
 			return this;
 		}
 		MimeBodyPart bodyPart = new MimeBodyPart();
-		String bodyPartType = "text/html; charset=" + htmlTextEncoding;
-		bodyPart.setContent(htmlText, bodyPartType);
+		String bodyPartType = "text/html; charset=" + htmlContent.getEncoding();
+		bodyPart.setContent(htmlContent.getText(), bodyPartType);
 		m.addBodyPart(bodyPart);
 		return this;
+	}
+
+	public MimeMultipartBuilder addBodyPartJsonLd(StructuredData structuredData) throws MessagingException {
+		if (structuredData == null) {
+			return this;
+		}
+		return addBodyPartJsonLd(structuredData, "utf-8");
 	}
 
 	public MimeMultipartBuilder addBodyPartJsonLd(StructuredData structuredData, String jsonLdEncoding) throws MessagingException {

@@ -6,6 +6,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -97,6 +98,10 @@ public class StructuredMimeMessageWrapper {
         mm.writeTo(out);
     }
 
+    public void writeTo(ByteArrayOutputStream out) throws MessagingException, IOException {
+        mm.writeTo(out);
+    }
+
     public String getContentType() throws MessagingException {
         return mm.getContentType();
     }
@@ -142,5 +147,21 @@ public class StructuredMimeMessageWrapper {
 
     public String getSubject() throws MessagingException {
         return mm.getSubject();
+    }
+
+    public void setRecipient(Message.RecipientType type, Address address) throws MessagingException {
+        mm.setRecipient(type, address);
+    }
+
+    public void getRecipients(Message.RecipientType type) throws MessagingException {
+        mm.getRecipients(type);
+    }
+
+    public void setReplyTo(Address[] addresses) throws MessagingException {
+        mm.setReplyTo(addresses);
+    }
+
+    public Address[] getReplyTo() throws MessagingException {
+        return mm.getReplyTo();
     }
 }
