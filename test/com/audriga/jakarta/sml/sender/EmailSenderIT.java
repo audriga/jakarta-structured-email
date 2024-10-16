@@ -1,6 +1,7 @@
 package com.audriga.jakarta.sml.sender;
 
 import com.audriga.jakarta.sml.TestUtils;
+import com.audriga.jakarta.sml.extension.sender.EmailSender;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;

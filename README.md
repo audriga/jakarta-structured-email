@@ -24,29 +24,28 @@ The goal of this library is to support and showcase multiple possible approaches
 To create structured email messages, simply use the generator to create a MIME message with structured data included in the HTML body via `<script>` tag:
 
 ```java
-import com.audriga.jakarta.sml.model.StructuredData;
-import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
-import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.extension.mime.InlineHtmlMessageBuilder;
 import jakarta.mail.MessagingException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Example {
 
     public static void main(String[] args) throws MessagingException {
-    
+
         // Comment email content elements
         String emailSubject = "My first structured email";
         String textEmailBody = "This is a test email";
         String htmlEmailBody = "<html><body>This is a <b>test email</b></body></html>";
-    
+
         // Structured data
         String jsonLd = "{\r\n    \"@context\":              \"http://schema.org\",\r\n    \"@type\":                 \"EventReservation\",\r\n    \"reservationId\":         \"MBE12345\",\r\n    \"underName\": {\r\n        \"@type\":               \"Person\",\r\n        \"name\":                \"Noah Baumbach\"\r\n    },\r\n    \"reservationFor\": {\r\n        \"@type\":               \"Event\",\r\n        \"name\":                \"Make Better Email 2024\",\r\n        \"startDate\":           \"2024-10-15\",\r\n        \"organizer\": {\r\n            \"@type\":            \"Organization\",\r\n            \"name\":             \"Fastmail Pty Ltd.\",\r\n            \"logo\":             \"https://www.fastmail.com/assets/images/FM-Logo-RGB-IiFj8alCx1-3073.webp\"\r\n        },\r\n        \"location\": {\r\n            \"@type\":             \"Place\",\r\n            \"name\":              \"Isode Ltd\",\r\n            \"address\": {\r\n                \"@type\":           \"PostalAddress\",\r\n                \"streetAddress\":   \"14 Castle Mews\",\r\n                \"addressLocality\": \"Hampton\",\r\n                \"addressRegion\":   \"Greater London\",\r\n                \"postalCode\":      \"TW12 2NP\",\r\n                \"addressCountry\":  \"UK\"\r\n            }\r\n        }\r\n    }\r\n}";
 
         List<StructuredData> structuredDataList = new ArrayList<>();
         structuredDataList.add(new StructuredData(jsonLd));
-            
+
         StructuredMimeMessageWrapper message = new InlineHtmlMessageBuilder()
                 .subject(emailSubject)
                 .textBody(textEmailBody)
@@ -64,19 +63,17 @@ public class Example {
 To parse structured email messages, you can use the provided classes and methods to extract structured data from the email content.
 
 ```java
-import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.parser.StructuredEmailParser;
-import com.audriga.jakarta.sml.model.StructuredData;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.internet.MimeMessage;
-
-import java.util.List;
 
 public class Example {
 
     public static void main(String[] args) throws Exception {
-    
+
         MimeMessage message = ... // obtain a MimeMessage instance
-        
+
         StructuredMimeMessageWrapper structuredMessage = new StructuredMimeParser().parseMessage(message);
 
         for (StructuredData data : structuredMessage.getStructuredData()) {

@@ -1,8 +1,8 @@
 package com.audriga.jakarta.sml.scanner.cli;
 
-import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
-import com.audriga.jakarta.sml.model.StructuredData;
-import com.audriga.jakarta.sml.model.StructuredSyntax;
+import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.h2lj.model.StructuredSyntax;
 import jakarta.mail.Folder;
 import jakarta.mail.MessagingException;
 

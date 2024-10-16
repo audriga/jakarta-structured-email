@@ -1,4 +1,4 @@
-package com.audriga.jakarta.sml.model;
+package com.audriga.jakarta.sml.h2lj.model;
 
 public enum StructuredContext {
     SCHEMA_ORG("https://schema.org");

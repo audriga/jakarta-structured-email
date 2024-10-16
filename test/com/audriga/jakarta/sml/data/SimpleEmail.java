@@ -1,7 +1,7 @@
 package com.audriga.jakarta.sml.data;
 
-import com.audriga.jakarta.sml.model.StructuredData;
-import com.audriga.jakarta.sml.parser.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
 import com.audriga.jakarta.sml.TestUtils;
 
 import java.util.List;
@@ -36,11 +36,11 @@ public class SimpleEmail {
 
     public static List<StructuredData> getJson() {
         String json = TestUtils.readResource("jsonld/event-reservation-better.json");
-        return StructuredMimeParseUtils.parseStructuredDataFromJsonStr(json);
+        return StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
     }
 
     public static List<StructuredData> getJsonArray() {
         String json = TestUtils.readResource("jsonld/promotion-card.json");
-        return StructuredMimeParseUtils.parseStructuredDataFromJsonStr(json);
+        return StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
     }
 }

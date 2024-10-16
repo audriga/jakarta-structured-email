@@ -1,7 +1,7 @@
 package com.audriga.jakarta.sml;
 
-import com.audriga.jakarta.sml.mime.*;
-import com.audriga.jakarta.sml.model.StructuredData;
+import com.audriga.jakarta.sml.extension.mime.*;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.data.MultipartRelatedEmail;
 import com.audriga.jakarta.sml.data.SimpleEmail;
 import jakarta.mail.MessagingException;

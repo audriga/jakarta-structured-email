@@ -1,6 +1,8 @@
-package com.audriga.jakarta.sml.parser;
+package com.audriga.jakarta.sml.extension.parser;
 
-import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.extension.sender.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
+import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
 

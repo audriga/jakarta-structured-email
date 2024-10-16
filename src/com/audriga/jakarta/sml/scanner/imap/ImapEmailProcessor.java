@@ -1,8 +1,9 @@
 package com.audriga.jakarta.sml.scanner.imap;
 
-import com.audriga.jakarta.sml.mime.*;
-import com.audriga.jakarta.sml.model.StructuredData;
-import com.audriga.jakarta.sml.parser.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.extension.sender.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 
@@ -84,7 +85,7 @@ public class ImapEmailProcessor implements AutoCloseable {
                     MimeMessage mm = (MimeMessage)m;
 
                     StructuredMimeMessageWrapper ma = StructuredMimeParseUtils.parseMessage(mm);
-                        ma.setStructuredData(StructuredMimeParseUtils.parseStructuredDataFromHtml(ma));
+                        ma.setStructuredData(StructuredDataExtractionUtils.parseStructuredDataFromHtml(ma));
                     List<StructuredData> structuredData = ma.getStructuredData();
                     if (structuredData != null) {
                         // Determine from

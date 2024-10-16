@@ -27,7 +27,7 @@
         </copy>
     </target>
 
-    <target name="jar" depends="resolve,compile" description="Create a jar file">
+    <target name="jar-scanner" depends="resolve,compile" description="Create a jar file">
         <mkdir dir="${dist-dir}"/>
         <jar jarfile="${dist-dir}/__temp.jar">
             <zipgroupfileset dir="${lib-source}">
@@ -42,6 +42,20 @@
         </jar>
     </target>
 
+    <target name="jar-h2lj" depends="resolve,compile" description="Create a jar file">
+        <mkdir dir="${dist-dir}"/>
+        <jar jarfile="${dist-dir}/h2lj.jar" basedir="${bin}">
+            <fileset dir="${bin}" includes="src/com/audriga/jakarta/sml/h2lj/**/*.class" />
+        </jar>
+    </target>
+
+    <target name="jar" depends="resolve,compile" description="Create a jar file">
+        <mkdir dir="${dist-dir}"/>
+        <jar jarfile="${dist-dir}/jakarta-structured-email.jar" basedir="${bin}">
+            <fileset dir="${bin}" includes="src/com/audriga/jakarta/sml/h2lj/**/*.class" />
+            <fileset dir="${bin}" includes="src/com/audriga/jakarta/sml/extension/**/*.class" />
+        </jar>
+    </target>
 
     <target name="clean" description="Cleans this project">
         <delete dir="${bin}" failonerror="false" />
