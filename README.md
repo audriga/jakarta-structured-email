@@ -85,7 +85,7 @@ public class Example {
 
 ### Further examples
 
-For more complete examples, see the [MailProcessingTest](test/com/audriga/jakarta/sml/test/MailProcessingTest.java) class, which demonstrates parsing and creating mails.
+For more complete examples, see the [MailProcessingTest](test/com/audriga/jakarta/sml/extension/MailProcessingTest.java) class, which demonstrates parsing and creating mails.
 
 ## Building
 
