@@ -1,9 +1,9 @@
-package com.audriga.jakarta.sml.test;
+package com.audriga.jakarta.sml;
 
 import com.audriga.jakarta.sml.mime.*;
 import com.audriga.jakarta.sml.model.StructuredData;
-import com.audriga.jakarta.sml.test.data.MultipartRelatedEmail;
-import com.audriga.jakarta.sml.test.data.SimpleEmail;
+import com.audriga.jakarta.sml.data.MultipartRelatedEmail;
+import com.audriga.jakarta.sml.data.SimpleEmail;
 import jakarta.mail.MessagingException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

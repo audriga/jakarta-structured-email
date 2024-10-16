@@ -1,4 +1,4 @@
-package com.audriga.jakarta.sml.test.scanner.cli;
+package com.audriga.jakarta.sml.scanner.cli;
 
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.model.StructuredData;

@@ -1,4 +1,4 @@
-package com.audriga.jakarta.sml.test;
+package com.audriga.jakarta.sml;
 
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.parser.StructuredMimeParseUtils;
@@ -10,7 +10,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -47,6 +51,16 @@ public class TestUtils {
         assert inputStream != null;
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    public static Path readResourceAsPath(String s) throws URISyntaxException {
+        URL res = TestUtils.class.getClassLoader().getResource(s);
+
+        if (res == null) {
+            throw new RuntimeException(String.format("File '%s' not found", s));
+        }
+
+        return Paths.get(res.toURI());
     }
 
     public static StructuredMimeMessageWrapper parseEmlFile(String filename) throws MessagingException, IOException {

@@ -1,0 +1,8 @@
+#Wed Oct 16 10:37:02 CEST 2024
+mail.from=user@example.com
+mail.host=smtp.example.com
+mail.user=user@example.com
+mail.transport.protocol=smtps
+mail.smtps.port=465
+mail.debug.auth=true
+smtps.password=yourPasswordHere

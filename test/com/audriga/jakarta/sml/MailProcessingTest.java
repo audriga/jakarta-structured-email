@@ -1,8 +1,8 @@
-package com.audriga.jakarta.sml.test;
+package com.audriga.jakarta.sml;
 import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
-import com.audriga.jakarta.sml.test.data.SimpleEmail;
+import com.audriga.jakarta.sml.data.SimpleEmail;
 import jakarta.mail.MessagingException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;

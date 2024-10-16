@@ -5,3 +5,6 @@ lib/
 out/
 bin/
 dist/
+
+# Ignore smtp.properties file
+smtp.properties

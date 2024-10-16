@@ -164,4 +164,8 @@ public class StructuredMimeMessageWrapper {
     public Address[] getReplyTo() throws MessagingException {
         return mm.getReplyTo();
     }
+
+    public MimeMessage getMimeMessage() {
+        return mm;
+    }
 }

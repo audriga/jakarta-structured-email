@@ -4,9 +4,6 @@ import com.audriga.jakarta.sml.model.MimeTextContent;
 import com.audriga.jakarta.sml.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
-import jakarta.mail.Session;
-
-import java.util.Properties;
 
 public class HtmlOnlyMessageBuilder extends AbstractMessageBuilder<HtmlOnlyMessageBuilder> {
     private String htmlTag;
@@ -26,9 +23,7 @@ public class HtmlOnlyMessageBuilder extends AbstractMessageBuilder<HtmlOnlyMessa
         StructuredData jsonStructuredData = checkStructuredDataToInsert(structuredData);
         String html = insertJsonLdInHtml(htmlBody, jsonStructuredData, htmlTag);
 
-        Properties properties = System.getProperties();
-        Session session = Session.getDefaultInstance(properties, null);
-        StructuredMimeMessageWrapper sm = new StructuredMimeMessageWrapper(session);
+        StructuredMimeMessageWrapper sm = initMessage();
 
         if (subject != null) {
             sm.setSubject(subject);
