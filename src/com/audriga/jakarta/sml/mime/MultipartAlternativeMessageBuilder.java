@@ -4,9 +4,6 @@ import com.audriga.jakarta.sml.model.MimeTextContent;
 import com.audriga.jakarta.sml.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
-import jakarta.mail.Session;
-
-import java.util.Properties;
 
 public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<MultipartAlternativeMessageBuilder> {
     private MimeTextContent textBody;
@@ -40,9 +37,7 @@ public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<M
             structuredDataPart = structuredData.get(0);
         }
 
-        Properties properties = System.getProperties();
-        Session session = Session.getDefaultInstance(properties, null);
-        StructuredMimeMessageWrapper sm = new StructuredMimeMessageWrapper(session);
+        StructuredMimeMessageWrapper sm = initMessage();
 
         MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
         if (htmlLast) {

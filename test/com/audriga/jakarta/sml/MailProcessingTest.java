@@ -1,8 +1,8 @@
-package com.audriga.jakarta.sml.test;
+package com.audriga.jakarta.sml;
 import com.audriga.jakarta.sml.mime.InlineHtmlMessageBuilder;
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
-import com.audriga.jakarta.sml.test.data.SimpleEmail;
+import com.audriga.jakarta.sml.data.SimpleEmail;
 import jakarta.mail.MessagingException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -34,7 +34,7 @@ public class MailProcessingTest {
     }
 
     /* This is copy+pasted from README */
-    @Test
+    @Test(groups = "unit")
     public void testInlineHtmlGeneratorSimple() throws MessagingException {
         // Comment email content elements
         String emailSubject = "My first structured email";
@@ -61,7 +61,7 @@ public class MailProcessingTest {
         assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
     }
 
-    @Test(dataProvider = "emailVariantsInline")
+    @Test(dataProvider = "emailVariantsInline", groups = "unit")
     public void testInlineHtmlGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);

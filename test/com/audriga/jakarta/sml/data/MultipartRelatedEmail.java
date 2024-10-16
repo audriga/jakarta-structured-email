@@ -1,8 +1,8 @@
-package com.audriga.jakarta.sml.test.data;
+package com.audriga.jakarta.sml.data;
 
 import com.audriga.jakarta.sml.model.StructuredData;
 import com.audriga.jakarta.sml.parser.StructuredMimeParseUtils;
-import com.audriga.jakarta.sml.test.TestUtils;
+import com.audriga.jakarta.sml.TestUtils;
 
 import java.util.List;
 

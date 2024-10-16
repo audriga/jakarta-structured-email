@@ -1,8 +1,8 @@
-package com.audriga.jakarta.sml.test.scanner;
+package com.audriga.jakarta.sml.scanner;
 
 import com.audriga.jakarta.sml.scanner.imap.ImapEmailProcessor;
 import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
-import com.audriga.jakarta.sml.test.TestUtils;
+import com.audriga.jakarta.sml.TestUtils;
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 import org.mockito.Mock;
@@ -30,7 +30,7 @@ public class ImapTest {
 
     private ImapEmailProcessor processor;
 
-    @BeforeClass
+    @BeforeClass (groups = "unit")
     public void setUp() throws MessagingException {
         TestUtils.initLogging();
 
@@ -46,12 +46,12 @@ public class ImapTest {
         assertNotNull(processor);
     }
 
-    @AfterClass
+    @AfterClass(groups = "unit")
     public void tearDown() throws MessagingException {
         processor.close();
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCheckSchema() throws Exception {
         // Mock the behavior of the Folder
         when(mockFolder.getMessages()).thenReturn(new Message[]{mockMessage});
@@ -67,7 +67,7 @@ public class ImapTest {
         assertFalse(res.isEmpty());
     }
 
-    @Test (dependsOnMethods = "testCheckSchema")
+    @Test(groups = "unit", dependsOnMethods = "testCheckSchema")
     public void testCheckSchemaBrokenJson() throws Exception {
         when(mockMessage.getContent()).thenReturn(TestUtils.readResource("html-body/jsonld-inline-body-broken.html"));
 

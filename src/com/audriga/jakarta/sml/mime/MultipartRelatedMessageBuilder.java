@@ -4,10 +4,7 @@ import com.audriga.jakarta.sml.model.MimeTextContent;
 import com.audriga.jakarta.sml.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
-import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMultipart;
-
-import java.util.Properties;
 
 public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<MultipartRelatedMessageBuilder> {
     private MimeTextContent textBody;
@@ -35,9 +32,7 @@ public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<Multi
             structuredDataPart = structuredData.get(0);
         }
 
-        Properties properties = System.getProperties();
-        Session session = Session.getDefaultInstance(properties, null);
-        StructuredMimeMessageWrapper sm = new StructuredMimeMessageWrapper(session);
+        StructuredMimeMessageWrapper sm = initMessage();
 
         MimeMultipart alternative =  new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE)
                 .addBodyPartText(textBody)

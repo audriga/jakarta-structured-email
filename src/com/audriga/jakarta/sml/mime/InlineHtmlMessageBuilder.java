@@ -41,9 +41,7 @@ public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlM
         StructuredData jsonStructuredData = checkStructuredDataToInsert(structuredData);
         String html = insertJsonLdInHtml(htmlBody, jsonStructuredData, htmlTag);
 
-        Properties properties = System.getProperties();
-        Session session = Session.getDefaultInstance(properties, null);
-        StructuredMimeMessageWrapper sm = new StructuredMimeMessageWrapper(session);
+        StructuredMimeMessageWrapper sm = initMessage();
 
         MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
         if (htmlLast) {

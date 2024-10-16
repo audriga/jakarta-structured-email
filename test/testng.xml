@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="UnitTestSuite">
+    <test name="UnitTest">
+        <groups>
+            <run>
+                <!-- exclude integration tests by default -->
+                <include name="unit"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="com.audriga.jakarta.sml.*"/>
+        </packages>
+    </test>
+</suite>

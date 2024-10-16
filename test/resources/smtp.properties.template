@@ -1,0 +1,11 @@
+# For Jakarta-mail Sesion object:
+mail.from=user@example.com
+mail.host=smtp.example.com
+mail.user=user@example.com
+mail.transport.protocol=smtps
+mail.smtps.port=465
+mail.debug.auth=true
+
+# Specific to Jakarta-structured-email:
+mail.password=yourPasswordHere
+mail.to=user@example.com

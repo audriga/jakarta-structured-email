@@ -6,9 +6,11 @@ import com.audriga.jakarta.sml.model.StructuredSyntax;
 import jakarta.activation.DataHandler;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
 import jakarta.mail.internet.InternetAddress;
 
 import java.util.List;
+import java.util.Properties;
 
 public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>> {
     static {
@@ -20,6 +22,12 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
     protected List<StructuredData> structuredData;
     protected Address[] from;
     protected Address to;
+    protected Session session;
+
+    public T session(Session session) {
+        this.session = session;
+        return self();
+    }
 
     public T subject(String subject) {
         this.subject = subject;
@@ -106,5 +114,13 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
         } else {
             throw new IllegalArgumentException("HTML does not contain <head> tag.");
         }
+    }
+
+    protected StructuredMimeMessageWrapper initMessage() {
+        if (session == null) {
+            Properties properties = System.getProperties();
+            session = Session.getDefaultInstance(properties, null);
+        }
+        return new StructuredMimeMessageWrapper(session);
     }
 }
