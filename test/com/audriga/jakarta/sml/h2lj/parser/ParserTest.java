@@ -1,8 +1,7 @@
-package com.audriga.jakarta.sml.scanner;
+package com.audriga.jakarta.sml.h2lj.parser;
 
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.h2lj.model.StructuredSyntax;
-import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
 import com.audriga.jakarta.sml.TestUtils;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

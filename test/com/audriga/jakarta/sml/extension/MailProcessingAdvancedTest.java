@@ -1,5 +1,6 @@
-package com.audriga.jakarta.sml;
+package com.audriga.jakarta.sml.extension;
 
+import com.audriga.jakarta.sml.TestUtils;
 import com.audriga.jakarta.sml.extension.mime.*;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.data.MultipartRelatedEmail;

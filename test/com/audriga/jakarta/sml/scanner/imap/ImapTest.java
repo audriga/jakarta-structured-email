@@ -1,6 +1,5 @@
-package com.audriga.jakarta.sml.scanner;
+package com.audriga.jakarta.sml.scanner.imap;
 
-import com.audriga.jakarta.sml.scanner.imap.ImapEmailProcessor;
 import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.TestUtils;
 import jakarta.mail.*;
