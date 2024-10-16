@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 public class FileDumperTest {
 
-    @Test
+    @Test(groups = "unit")
     public void testCanDumpUnbelievablyLongFilename() throws MessagingException {
         // Mock the Folder and StructuredMimeMessageWrapper
         Folder mockFolder = mock(Folder.class);

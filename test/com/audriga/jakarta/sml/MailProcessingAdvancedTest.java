@@ -19,7 +19,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class MailProcessingAdvancedTest {
-    @BeforeClass
+    @BeforeClass(groups = "unit")
     public void setUp() {
         TestUtils.initLogging();
     }
@@ -55,7 +55,7 @@ public class MailProcessingAdvancedTest {
         };
     }
 
-    @Test(dataProvider = "emailVariantsAlternative")
+    @Test(dataProvider = "emailVariantsAlternative", groups = "unit")
     public void testFullMultipartAlternativeGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
@@ -87,7 +87,7 @@ public class MailProcessingAdvancedTest {
         }
     }
 
-    @Test(dataProvider = "emailVariantsRelated")
+    @Test(dataProvider = "emailVariantsRelated", groups = "unit")
     public void testFullMultipartRelatedGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
@@ -118,7 +118,7 @@ public class MailProcessingAdvancedTest {
         }
     }
 
-    @Test(dataProvider = "emailVariantsHtml")
+    @Test(dataProvider = "emailVariantsHtml", groups = "unit")
     public void testFullHtmlOnlyGenerator(String emlFilePath, String subject, String htmlBody, List<StructuredData> jsonList) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
@@ -143,7 +143,7 @@ public class MailProcessingAdvancedTest {
         assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testInlineHtmlGeneratorWithJsonLdInHead() throws MessagingException, IOException {
         // Generate
         List<StructuredData> json = SimpleEmail.getJson();

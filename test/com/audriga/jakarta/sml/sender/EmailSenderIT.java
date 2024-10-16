@@ -13,7 +13,8 @@ import java.nio.file.Path;
 import java.util.Properties;
 
 public class EmailSenderIT {
-    @Test
+
+    @Test(groups = "integration")
     public void testSendSmlEmailExample() throws IOException, MessagingException, URISyntaxException {
         Path propPath = TestUtils.readResourceAsPath("smtp.properties");
         Properties props = new Properties();
