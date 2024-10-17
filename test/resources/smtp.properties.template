@@ -9,3 +9,4 @@ mail.debug.auth=true
 # Specific to Jakarta-structured-email:
 mail.password=yourPasswordHere
 mail.to=user@example.com
+mail.example=inline-html-text-json

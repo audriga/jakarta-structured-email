@@ -4,7 +4,6 @@ import com.audriga.jakarta.sml.extension.mime.*;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -21,7 +20,7 @@ public class EmailSender {
         session = Session.getDefaultInstance(properties, null);
     }
 
-    public EmailSender(Properties props) throws IOException {
+    public EmailSender(Properties props) {
         properties = props;
         this.session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -29,6 +28,11 @@ public class EmailSender {
                 return new PasswordAuthentication(properties.getProperty("mail.user"), properties.getProperty("mail.password"));
             }
         });
+    }
+
+    public void sendEmail(StructuredMimeMessageWrapper message) throws MessagingException {
+        Transport transport = session.getTransport();
+        transport.send(message.getMimeMessage());
     }
 
     public void sendEmail(Address[] to, Address[] from, String exampleName) throws MessagingException {
@@ -114,9 +118,6 @@ public class EmailSender {
             default:
                 throw new IllegalArgumentException("Unknown builder type: " + builderType);
         }
-
-        Transport transport = session.getTransport();
-        transport.send(message.getMimeMessage());
+        sendEmail(message);
     }
-
 }
