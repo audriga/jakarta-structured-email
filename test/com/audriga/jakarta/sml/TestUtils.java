@@ -1,7 +1,8 @@
 package com.audriga.jakarta.sml;
 
-import com.audriga.jakarta.sml.mime.StructuredMimeMessageWrapper;
-import com.audriga.jakarta.sml.parser.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
+import com.audriga.jakarta.sml.extension.sender.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
@@ -70,7 +71,7 @@ public class TestUtils {
         Session session = Session.getDefaultInstance(new Properties());
         MimeMessage msg = new MimeMessage(session, inputStream);
         StructuredMimeMessageWrapper smw = StructuredMimeParseUtils.parseMessage(msg);
-        smw.setStructuredData(StructuredMimeParseUtils.parseStructuredDataFromHtml(smw));
+        smw.setStructuredData(StructuredDataExtractionUtils.parseStructuredDataFromHtml(smw));
         return smw;
     }
 }

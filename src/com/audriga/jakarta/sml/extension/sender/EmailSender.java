@@ -1,7 +1,7 @@
-package com.audriga.jakarta.sml.sender;
+package com.audriga.jakarta.sml.extension.sender;
 
-import com.audriga.jakarta.sml.mime.*;
-import com.audriga.jakarta.sml.model.StructuredData;
+import com.audriga.jakarta.sml.extension.mime.*;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.*;
 
 import java.io.IOException;

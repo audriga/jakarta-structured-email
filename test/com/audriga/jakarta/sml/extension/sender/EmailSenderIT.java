@@ -1,4 +1,4 @@
-package com.audriga.jakarta.sml.sender;
+package com.audriga.jakarta.sml.extension.sender;
 
 import com.audriga.jakarta.sml.TestUtils;
 import jakarta.mail.Address;

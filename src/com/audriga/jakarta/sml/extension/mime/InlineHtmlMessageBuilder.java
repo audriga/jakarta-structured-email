@@ -1,12 +1,9 @@
-package com.audriga.jakarta.sml.mime;
+package com.audriga.jakarta.sml.extension.mime;
 
-import com.audriga.jakarta.sml.model.MimeTextContent;
-import com.audriga.jakarta.sml.model.StructuredData;
+import com.audriga.jakarta.sml.extension.model.MimeTextContent;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
-import jakarta.mail.Session;
-
-import java.util.Properties;
 
 public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlMessageBuilder> {
 

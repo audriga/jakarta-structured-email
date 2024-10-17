@@ -1,4 +1,4 @@
-package com.audriga.jakarta.sml.model;
+package com.audriga.jakarta.sml.extension.model;
 
 public class MimeTextContent {
         private String text;

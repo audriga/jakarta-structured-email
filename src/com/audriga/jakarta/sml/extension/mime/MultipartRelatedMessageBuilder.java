@@ -1,28 +1,23 @@
-package com.audriga.jakarta.sml.mime;
+package com.audriga.jakarta.sml.extension.mime;
 
-import com.audriga.jakarta.sml.model.MimeTextContent;
-import com.audriga.jakarta.sml.model.StructuredData;
+import com.audriga.jakarta.sml.extension.model.MimeTextContent;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMultipart;
 
-public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<MultipartAlternativeMessageBuilder> {
+public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<MultipartRelatedMessageBuilder> {
     private MimeTextContent textBody;
-    private boolean htmlLast = true;
 
-    public MultipartAlternativeMessageBuilder textBody(String textBody) {
+    public MultipartRelatedMessageBuilder textBody(String textBody) {
         if (textBody != null) {
             this.textBody = new MimeTextContent(textBody, "utf-8");
         }
         return self();
     }
 
-    public MultipartAlternativeMessageBuilder htmlLast(boolean htmlLast) {
-        this.htmlLast = htmlLast;
-        return this;
-    }
-
     @Override
-    protected MultipartAlternativeMessageBuilder self() {
+    protected MultipartRelatedMessageBuilder self() {
         return this;
     }
 
@@ -39,17 +34,16 @@ public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<M
 
         StructuredMimeMessageWrapper sm = initMessage();
 
-        MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
-        if (htmlLast) {
-            multipartBuilder.addBodyPartText(textBody);
-            multipartBuilder.addBodyPartJsonLd(structuredDataPart);
-            multipartBuilder.addBodyPartHtml(htmlBody);
-        } else {
-            multipartBuilder.addBodyPartText(textBody);
-            multipartBuilder.addBodyPartHtml(htmlBody);
-            multipartBuilder.addBodyPartJsonLd(structuredDataPart);
-        }
-        sm.resetContent(multipartBuilder.build());
+        MimeMultipart alternative =  new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE)
+                .addBodyPartText(textBody)
+                .addBodyPartHtml(htmlBody)
+                .build();
+
+        MimeMultipart mm =  new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.RELATED)
+                .addBodyPart(alternative)
+                .addBodyPartJsonLd(structuredDataPart, "utf-8")
+                .build();
+        sm.resetContent(mm);
 
         if (subject != null) {
             sm.setSubject(subject);

@@ -1,6 +1,6 @@
-package com.audriga.jakarta.sml.mime;
+package com.audriga.jakarta.sml.extension.mime;
 
-import com.audriga.jakarta.sml.model.StructuredData;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.activation.ActivationDataFlavor;
 import jakarta.activation.DataSource;
 import org.eclipse.angus.mail.handlers.text_plain;

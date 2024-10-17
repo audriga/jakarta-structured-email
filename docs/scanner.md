@@ -4,11 +4,15 @@ This is a command line tool for scanning an IMAP account.
 
 Its goal is to **find existing messages which contain Schema.org markup** (JSON-LD or Microdata) and to optionally dump the findings as JSON-LD.
 
-**Please consider donating test data** (in anonymized/pseudonomized form) to the [schema-org-examples dataset](https://github.com/audriga/schema-org-examples/).
+**Please consider donating test data** (in anonymized/pseudonymous form) to the [schema-org-examples dataset](https://github.com/audriga/schema-org-examples/).
 
 ## Building
 
-See build instructions in the [main README](../README.md#Building)
+To build the project, use the following command to create the `sml-account-scan.jar` file under `dist/`:
+
+```shell
+ant jar-scanner
+```
 
 ## Running
 
@@ -37,7 +41,7 @@ See also additional config options below.
 
 ### Using with FastMail/Gmail/Microsoft accounts
 
-Some email providers, such as FastMail, Google, and Microsoft recommend OAuth as the default authentication mechnanism. Since this scanner currently does not support OAuth, you can alternatively set up a so-called "app-specific passwords" for those providers.
+Some email providers, such as FastMail, Google, and Microsoft recommend OAuth as the default authentication mechanism. Since this scanner currently does not support OAuth, you can alternatively set up a so-called "app-specific passwords" for those providers.
 
 Please see the corresponding provider documentation for details:
 
