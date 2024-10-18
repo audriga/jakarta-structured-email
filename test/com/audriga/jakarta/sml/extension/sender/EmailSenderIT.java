@@ -1,6 +1,7 @@
 package com.audriga.jakarta.sml.extension.sender;
 
 import com.audriga.jakarta.sml.TestUtils;
+import com.audriga.jakarta.sml.data.SimpleEmail;
 import com.audriga.jakarta.sml.extension.mime.*;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.Address;
@@ -26,7 +27,7 @@ public class EmailSenderIT {
         String[] parts = exampleName.split("-");
         String builderType = parts[0];
         boolean htmlLast = false;
-        String subject = "Generated EML for " + exampleName;
+        String subject = SimpleEmail.getSubject();
         String textBody = null;
         String htmlBody = null;
         List<StructuredData> structuredDataList = new ArrayList<>();
@@ -34,15 +35,14 @@ public class EmailSenderIT {
         for (int i = 1; i < parts.length; i++) {
             switch (parts[i]) {
                 case "text":
-                    textBody = "This is a text body for " + exampleName;
+                    textBody  = SimpleEmail.getTextBody();
                     break;
                 case "html":
-                    htmlBody = "<html><body>This is an <b>HTML</b> body for " + exampleName + "</body></html>";
+                    htmlBody = SimpleEmail.getHtmlBody();
                     htmlLast = true;
                     break;
                 case "json":
-                    String jsonLd = "{ \"@context\": \"http://schema.org\", \"@type\": \"EmailMessage\", \"name\": \"" + exampleName + "\" }";
-                    structuredDataList.add(new StructuredData(jsonLd));
+                    structuredDataList.addAll(SimpleEmail.getJson());
                     break;
                 default:
                     throw new IllegalArgumentException(
