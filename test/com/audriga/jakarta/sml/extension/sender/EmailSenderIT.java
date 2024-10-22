@@ -39,7 +39,9 @@ public class EmailSenderIT {
                     break;
                 case "html":
                     htmlBody = SimpleEmail.getHtmlBody();
-                    htmlLast = true;
+                    if (i == (parts.length - 1)) {
+                        htmlLast = true;
+                    }
                     break;
                 case "json":
                     structuredDataList.addAll(SimpleEmail.getJson());
@@ -83,6 +85,7 @@ public class EmailSenderIT {
                         .subject(subject)
                         .textBody(textBody)
                         .htmlBody(htmlBody)
+                        .htmlLast(htmlLast)
                         .structuredData(structuredDataList)
                         .to(singleTo)
                         .from(from)
