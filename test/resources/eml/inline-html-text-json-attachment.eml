@@ -1,0 +1,105 @@
+Date: Fri, 25 Oct 2024 12:33:18 +0200 (CEST)
+Message-ID: <1325124186.14.1729852398170@[192.168.1.136]>
+Subject: Make Email Better Again!
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_13_1448061896.1729852398162"
+
+------=_Part_13_1448061896.1729852398162
+Content-Type: application/octet-stream; name=event-reservation.xml
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename=event-reservation.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReservation>
+    <event>
+        <name>Make Better Email 2024</name>
+        <date>2024-05-15</date>
+        <location>
+            <venue>Convention Center</venue>
+            <address>
+                <street>123 Main St</street>
+                <city>Sample City</city>
+                <state>CA</state>
+                <zip>12345</zip>
+                <country>USA</country>
+            </address>
+        </location>
+    </event>
+    <attendee>
+        <name>John Doe</name>
+        <email>john.doe@example.com</email>
+        <ticketNumber>ABC123456</ticketNumber>
+    </attendee>
+</eventReservation>
+------=_Part_13_1448061896.1729852398162
+Content-Type: multipart/alternative;
+	boundary="----=_Part_12_1199673596.1729852398162"
+
+------=_Part_12_1199673596.1729852398162
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Event Reservation</title>
+</head>
+<body>
+<h1>Event Reservation Confirmation</h1>
+<p>Dear Noah Baumbach,</p>
+<p>Thank you for your reservation. Here are the details:</p>
+<table>
+    <tr>
+        <td><strong>Reservation Number:</strong></td>
+        <td>MBE12345</td>
+    </tr>
+    <tr>
+        <td><strong>Event Name:</strong></td>
+        <td>Make Better Email 2024</td>
+    </tr>
+    <tr>
+        <td><strong>Start Date:</strong></td>
+        <td>2024-10-30</td>
+    </tr>
+    <tr>
+        <td><strong>Location:</strong></td>
+        <td>
+            Isode Ltd<br>
+            14 Castle Mews<br>
+            Hampton TW12 2NP<br>
+            UK
+        </td>
+    </tr>
+</table>
+<p>We look forward to seeing you at the event!</p>
+<p>Best regards,<br>The Event Team</p>
+</body>
+</html>
+------=_Part_12_1199673596.1729852398162
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Event Reservation Confirmation
+
+Dear Noah Baumbach,
+
+Thank you for your reservation. Here are the details:
+
+Reservation Number: MBE12345
+Event Name: Make Better Email 2024
+Start Date: 2024-10-30
+Location:
+    Isode Ltd
+    14 Castle Mews
+    Hampton TW12 2NP
+    UK
+
+We look forward to seeing you at the event!
+
+Best regards,
+The Event Team
+------=_Part_12_1199673596.1729852398162--
+
+------=_Part_13_1448061896.1729852398162--

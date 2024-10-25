@@ -4,6 +4,7 @@ import com.audriga.jakarta.sml.TestUtils;
 import com.audriga.jakarta.sml.data.SimpleEmail;
 import com.audriga.jakarta.sml.extension.mime.*;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import jakarta.activation.FileDataSource;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.InternetAddress;
@@ -23,13 +24,15 @@ public class EmailSenderIT {
     EmailSender sender;
     private static final Logger mLogger = Logger.getLogger(EmailSenderIT.class.getName());
 
-    private void sendEmail(Address[] to, Address[] from, String exampleName) throws MessagingException {
+    private void sendEmail(Address[] to, Address[] from, String exampleName) throws MessagingException, URISyntaxException {
         String[] parts = exampleName.split("-");
         String builderType = parts[0];
         boolean htmlLast = false;
         String subject = SimpleEmail.getSubject();
         String textBody = null;
         String htmlBody = null;
+        FileDataSource attachment = null;
+        String attachmentName = null;
         List<StructuredData> structuredDataList = new ArrayList<>();
 
         for (int i = 1; i < parts.length; i++) {
@@ -45,6 +48,10 @@ public class EmailSenderIT {
                     break;
                 case "json":
                     structuredDataList.addAll(SimpleEmail.getJson());
+                    break;
+                case "attachment":
+                    attachment = SimpleEmail.getAttachment();
+                    attachmentName = SimpleEmail.getAttachmentName();
                     break;
                 default:
                     throw new IllegalArgumentException(
@@ -69,6 +76,7 @@ public class EmailSenderIT {
                         .structuredData(structuredDataList)
                         .to(singleTo)
                         .from(from)
+                        .addAttachment(attachment, attachmentName)
                         .build();
                 break;
             case "html":

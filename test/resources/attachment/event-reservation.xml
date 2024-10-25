@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eventReservation>
+    <event>
+        <name>Make Better Email 2024</name>
+        <date>2024-05-15</date>
+        <location>
+            <venue>Convention Center</venue>
+            <address>
+                <street>123 Main St</street>
+                <city>Sample City</city>
+                <state>CA</state>
+                <zip>12345</zip>
+                <country>USA</country>
+            </address>
+        </location>
+    </event>
+    <attendee>
+        <name>John Doe</name>
+        <email>john.doe@example.com</email>
+        <ticketNumber>ABC123456</ticketNumber>
+    </attendee>
+</eventReservation>
