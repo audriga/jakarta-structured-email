@@ -2,14 +2,21 @@ package com.audriga.jakarta.sml.extension.mime;
 
 import com.audriga.jakarta.sml.extension.model.MimeTextContent;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import jakarta.activation.DataHandler;
+import jakarta.activation.FileDataSource;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeBodyPart;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlMessageBuilder> {
 
     private MimeTextContent textBody;
     private String htmlTag;
     private boolean htmlLast = true;
+    private final List<MimeBodyPart> attachments = new ArrayList<>();
 
     public InlineHtmlMessageBuilder textBody(String textBody) {
         if (textBody != null) {
@@ -33,6 +40,20 @@ public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlM
         return this;
     }
 
+    public InlineHtmlMessageBuilder addAttachment(FileDataSource fileSource, String fileName) throws MessagingException {
+        if (fileSource == null) {
+            return this;
+        }
+        MimeBodyPart attachmentPart = new MimeBodyPart();
+        attachmentPart.setDataHandler(new DataHandler(fileSource));
+        if (fileName != null) {
+            attachmentPart.setFileName(fileName);
+        }
+        attachments.add(attachmentPart);
+        return this;
+    }
+
+
     @Override
     public StructuredMimeMessageWrapper build() throws MessagingException {
         StructuredData jsonStructuredData = checkStructuredDataToInsert(structuredData);
@@ -40,19 +61,34 @@ public class InlineHtmlMessageBuilder extends AbstractMessageBuilder<InlineHtmlM
 
         StructuredMimeMessageWrapper sm = initMessage();
 
-        MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
+        MimeMultipartBuilder multipartAlternativeBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
+
         if (htmlLast) {
-            multipartBuilder.addBodyPartText(textBody);
+            multipartAlternativeBuilder.addBodyPartText(textBody);
+
             if (html != null) {
-                multipartBuilder.addBodyPartHtml(new MimeTextContent(html, "utf-8"));
+                multipartAlternativeBuilder.addBodyPartHtml(new MimeTextContent(html, "utf-8"));
             }
         } else {
             if (html != null) {
-                multipartBuilder.addBodyPartHtml(new MimeTextContent(html, "utf-8"));
+                multipartAlternativeBuilder.addBodyPartHtml(new MimeTextContent(html, "utf-8"));
             }
-            multipartBuilder.addBodyPartText(textBody);
+
+            multipartAlternativeBuilder.addBodyPartText(textBody);
         }
-        sm.resetContent(multipartBuilder.build());
+
+        if (attachments.isEmpty()) {
+            sm.resetContent(multipartAlternativeBuilder.build());
+        } else {
+            MimeMultipartBuilder multipartMixedBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.MIXED);
+            for (MimeBodyPart attachment : attachments) {
+                multipartMixedBuilder.addBodyPart(attachment);
+            }
+            multipartMixedBuilder.addBodyPart(multipartAlternativeBuilder.build());
+
+            sm.resetContent(multipartMixedBuilder.build());
+        }
+
 
         if (subject != null) {
             sm.setSubject(subject);

@@ -4,6 +4,7 @@ import com.audriga.jakarta.sml.extension.mime.InlineHtmlMessageBuilder;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.data.SimpleEmail;
+import jakarta.activation.FileDataSource;
 import jakarta.mail.MessagingException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -11,6 +12,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +25,15 @@ public class MailProcessingTest {
     }
 
     @DataProvider(name = "emailVariantsInline")
-    public Object[][] emailVariantsInline() {
+    public Object[][] emailVariantsInline() throws URISyntaxException {
         return new Object[][] {
-                { "eml/inline-text-html-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true },
-                { "eml/inline-html-json.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true },
-                { "eml/inline-html.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), null, true },
-                { "eml/inline-text.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), null, SimpleEmail.getJson(), true },
-                { "eml/inline-text-html.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, true },
-                { "eml/inline-html-text-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, false }
+                { "eml/inline-text-html-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true, null, null },
+                { "eml/inline-html-json.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true, null, null },
+                { "eml/inline-html.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), null, true, null, null },
+                { "eml/inline-text.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), null, SimpleEmail.getJson(), true, null, null },
+                { "eml/inline-text-html.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, true, null, null },
+                { "eml/inline-html-text-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, false, null, null },
+                { "eml/inline-html-text-json-attachment.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, false, SimpleEmail.getAttachment(), SimpleEmail.getAttachmentName() },
         };
     }
 
@@ -63,7 +66,7 @@ public class MailProcessingTest {
     }
 
     @Test(dataProvider = "emailVariantsInline", groups = "unit")
-    public void testInlineHtmlGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast) throws MessagingException, IOException {
+    public void testInlineHtmlGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast, FileDataSource attachmentSource, String attachmentName) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
@@ -74,6 +77,7 @@ public class MailProcessingTest {
                 .htmlBody(htmlBody)
                 .structuredData(jsonList)
                 .htmlLast(htmlLast)
+                .addAttachment(attachmentSource, attachmentName)
                 .build();
         PrintStream out = System.out;
         message.writeTo(out);

@@ -84,3 +84,13 @@ Typically, the structured data represents the full email message and more, excep
 `MultipartAlternativeMessageGenerator`, where the structured data only relates to a part of the email message.
 
 See also [Mail Processing Test](../test/com/audriga/jakarta/sml/test/MailProcessingTest.java) and [Advanced Mail Processing Test](../test/com/audriga/jakarta/sml/test/MailProcessingAdvancedTest.java), which demonstrates parsing and creating the EML files.
+
+## Sending Examples
+
+Jakarta Structured Email also provides the [EmailSender](src/com/audriga/jakarta/sml/extension/sender/EmailSender.java)
+class for sending mails.
+
+For testing purposes there is an integration test in the
+[EmailSenderIT](test/com/audriga/jakarta/sml/extension/sender/EmailSenderIT.java) class that
+can be used for said purpose. It reads from a configuration file located at `test/resources/smtp.properties`.
+Refer to [smtp.properties.template](test/resources/smtp.properties.template) for example values.

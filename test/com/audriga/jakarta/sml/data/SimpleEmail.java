@@ -3,7 +3,10 @@ package com.audriga.jakarta.sml.data;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
 import com.audriga.jakarta.sml.TestUtils;
+import jakarta.activation.FileDataSource;
 
+import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.List;
 
 public class SimpleEmail {
@@ -42,5 +45,14 @@ public class SimpleEmail {
     public static List<StructuredData> getJsonArray() {
         String json = TestUtils.readResource("jsonld/promotion-card.json");
         return StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
+    }
+
+    public static FileDataSource getAttachment() throws URISyntaxException {
+        Path atPath = TestUtils.readResourceAsPath("attachment/event-reservation.xml");
+        return new FileDataSource(String.valueOf(atPath)); // TODO valueOf might not be necessary?
+    }
+
+    public static String getAttachmentName() {
+        return "event-reservation.xml";
     }
 }
