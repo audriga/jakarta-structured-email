@@ -28,7 +28,7 @@ public class EmailSenderIT {
         String[] parts = exampleName.split("-");
         String builderType = parts[0];
         boolean htmlLast = false;
-        String subject = SimpleEmail.getSubject();
+        String subject = String.format("[%s] %s", exampleName, SimpleEmail.getSubject());
         String textBody = null;
         String htmlBody = null;
         FileDataSource attachment = null;
