@@ -2,16 +2,19 @@ package com.audriga.jakarta.sml.extension;
 
 import com.audriga.jakarta.sml.TestUtils;
 import com.audriga.jakarta.sml.extension.mime.*;
+import com.audriga.jakarta.sml.extension.sender.StructuredMimeParseUtils;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.data.MultipartRelatedEmail;
 import com.audriga.jakarta.sml.data.SimpleEmail;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Part;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,12 +31,14 @@ public class MailProcessingAdvancedTest {
     @DataProvider(name = "emailVariantsAlternative")
     public Object[][] emailVariantsAlternative() {
         return new Object[][] {
-                { "eml/alternative-text-html-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), false },
-                { "eml/alternative-html-json.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), false },
-                { "eml/alternative-html.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), null, false },
-                { "eml/alternative-text-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), null, SimpleEmail.getJson(), false },
-                { "eml/alternative-text-html.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, false },
-                { "eml/alternative-text-json-html.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true },
+                { "eml/alternative-text-html-json-inline.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), false, Part.INLINE},
+                { "eml/alternative-text-html-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), false, null },
+                { "eml/alternative-html-json.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), false, null },
+                { "eml/alternative-html.eml", SimpleEmail.getSubject(), null, SimpleEmail.getHtmlBody(), null, false, null },
+                { "eml/alternative-text-json.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), null, SimpleEmail.getJson(), false, null },
+                { "eml/alternative-text-html.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), null, false, null },
+                { "eml/alternative-text-json-html.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true, null },
+                {"eml/alternative-text-html-json-inline.eml", SimpleEmail.getSubject(), SimpleEmail.getTextBody(), SimpleEmail.getHtmlBody(), SimpleEmail.getJson(), true, Part.INLINE },
         };
     }
 
@@ -57,12 +62,13 @@ public class MailProcessingAdvancedTest {
     }
 
     @Test(dataProvider = "emailVariantsAlternative", groups = "unit")
-    public void testFullMultipartAlternativeGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast) throws MessagingException, IOException {
+    public void testFullMultipartAlternativeGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast, String disposition) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
         // Generate
         StructuredMimeMessageWrapper message = new MultipartAlternativeMessageBuilder()
+                .disposition(disposition)
                 .subject(subject)
                 .textBody(textBody)
                 .htmlBody(htmlBody)
@@ -110,6 +116,9 @@ public class MailProcessingAdvancedTest {
             StructuredData generatedJson = message.getStructuredData().get(0);
             StructuredData resultJson = result.getStructuredData().get(0);
             assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
+            Part bodyPart = StructuredMimeParseUtils.parsePart(message.getMimeMessage(), Collections.singletonList(StructuredData.MIME_TYPE));
+            assert bodyPart != null;
+            assertEquals(bodyPart.getDisposition(), Part.INLINE);
         }
         if (htmlBody != null) {
             assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");

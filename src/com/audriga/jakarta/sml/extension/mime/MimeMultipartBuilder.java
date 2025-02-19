@@ -97,13 +97,27 @@ public class MimeMultipartBuilder {
 		return addBodyPartJsonLd(structuredData, "utf-8");
 	}
 
-	public MimeMultipartBuilder addBodyPartJsonLd(StructuredData structuredData, String jsonLdEncoding) throws MessagingException {
+	public MimeMultipartBuilder addBodyPartJsonLd(
+			StructuredData structuredData,
+			String jsonLdEncoding
+	) throws MessagingException {
+		return addBodyPartJsonLd(structuredData, jsonLdEncoding, null);
+	}
+
+	public MimeMultipartBuilder addBodyPartJsonLd(
+			StructuredData structuredData,
+			String jsonLdEncoding,
+			String disposition
+	) throws MessagingException {
 		if (structuredData == null) {
 			return this;
 		}
 		MimeBodyPart bodyPart = new MimeBodyPart();
 		String bodyPartType = StructuredData.MIME_TYPE + "; charset=" + jsonLdEncoding;
 		bodyPart.setContent(structuredData, bodyPartType);
+		if (disposition != null) {
+			bodyPart.setDisposition(disposition);
+		}
 		m.addBodyPart(bodyPart);
 		return this;
 	}
