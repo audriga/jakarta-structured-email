@@ -26,5 +26,7 @@
         <!-- https://mvnrepository.com/artifact/org.testng/testng -->
         <dependency org="org.testng" name="testng" rev="6.8.21"/>
 
+        <dependency org="org.mockito" name="mockito-core" rev="5.18.0"/>
+
     </dependencies>
 </ivy-module>
