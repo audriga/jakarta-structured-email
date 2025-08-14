@@ -10,6 +10,7 @@ import com.audriga.jakarta.sml.h2lj.model.StructuredSyntax;
 import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,9 +22,13 @@ public class StructuredDataExtractionUtils {
     public static List<StructuredData> parseStructuredDataPart(String html, StructuredSyntax syntax) {
         // TODO Filter irrelevant schema.org types (e.g. BreadcrumbList)
         // List<String> mainSchemaOrgTypes = filterIrrelevantSchemaOrgTypes(structuredData);
-
-        List<StructuredData> structuredDataList = new ArrayList<>();
         Document doc = Jsoup.parse(html);
+
+        return parseStructuredDataPart(doc, syntax);
+    }
+
+    public static List<StructuredData> parseStructuredDataPart(Document doc, StructuredSyntax syntax) {
+        List<StructuredData> structuredDataList = new ArrayList<>();
 
         if (syntax == StructuredSyntax.JSON_LD) {
             Elements scripts = doc.select("script[type=" + StructuredData.MIME_TYPE + "]");
@@ -43,7 +48,7 @@ public class StructuredDataExtractionUtils {
         return structuredDataList;
     }
 
-public static List<StructuredData> parseStructuredDataFromJsonStr(String jsonContent) {
+    public static List<StructuredData> parseStructuredDataFromJsonStr(String jsonContent) {
     if (jsonContent == null || jsonContent.isEmpty()) {
         return null;
     }
