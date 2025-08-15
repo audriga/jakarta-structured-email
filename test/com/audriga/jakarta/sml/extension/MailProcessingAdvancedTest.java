@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import static org.testng.Assert.*;
 
@@ -191,20 +190,18 @@ public class MailProcessingAdvancedTest {
         assertEquals(message.getStructuredData().getJsonLdText(), json.getJsonLdText(), "Structured data body should match the input");
     }
 
-    /*
     @Test(dataProvider = "emailVariantsHtmlNewsletter", groups = "unit")
     public void testHtmlNewsletterConversion(String emlFilePath) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
-        MimeTextContent body = result.getHtmlBody();
-        assertNotNull(body);
-        Document doc = Jsoup.parse(body.getText());
+        MimeTextContent htmlBody = result.getHtmlBody();
+        assertNotNull(htmlBody);
+        Document doc = Jsoup.parse(htmlBody.getText());
         Elements links = doc.select("a[href]");
         PrintStream out = System.out;
         Connection session = Jsoup.newSession();
         Map<String, String> recipeIds = new HashMap<>();
         List<JSONObject> recipes = new ArrayList<>();
-        List<StructuredData> recipesAsStructuredData = new ArrayList<>();
         for (Element linkElement : links) {
             String url = linkElement.attr("abs:href");
             if (url.startsWith("https://nl.nytimes.com/f/cooking")) {
@@ -228,7 +225,6 @@ public class MailProcessingAdvancedTest {
                             linkElement.attr("data-id", id);
                             recipeIds.put(url, id);
                             recipes.add(json);
-                            recipesAsStructuredData.add(structuredData);
                         }
                     }
                     if (!foundRecipe) {
@@ -245,39 +241,19 @@ public class MailProcessingAdvancedTest {
         String jsonArrayText = jsonArray.toString(4);
         out.println(jsonArrayText);
         MimeMessage originalMessage = result.getMimeMessage();
-        new StructuredData(jsonArrayText, new JSONObject(jsonArray));
+
         StructuredMimeMessageWrapper message = new MultipartAlternativeMessageBuilder()
                 .subject(originalMessage.getSubject())
 //                .textBody(result.getTextBody().getText()) // not getting text, original message only has html body.
-                .htmlBody(result.getHtmlBody())
+                .htmlBody(htmlBody.getText())
+//                .htmlBody(htmlBody) // todo: Document limitation: Encoding "quoted-printable" will throw UnsupportedEncodingException
                 .from(originalMessage.getFrom())
                 .to(originalMessage.getAllRecipients()[0])
-//                .to(originalMessage.getAllRecipients())
-                .structuredData(recipesAsStructuredData)
+//                .to(originalMessage.getAllRecipients()) // todo: Document limitation: Only one recipient
+                .structuredData(new JsonLdWrapper(jsonArray))
                 .build();
 
         message.writeTo(out);
 //        out.println(recipes.stream().map(JSONObject::toString).collect(Collectors.joining("\n")));
-
-
-//        // Generate
-//        StructuredMimeMessageWrapper message = new HtmlOnlyMessageBuilder()
-//                .subject(subject)
-//                .htmlBody(htmlBody)
-//                .structuredData(jsonList)
-//                .build();
-//        PrintStream out = System.out;
-//        message.writeTo(out);
-
-        // Compare
-//        assertTrue(message.getContentType().contains("text/html"), "Content type should be 'text/html'");
-//        if (jsonList != null && result.getStructuredData() != null) {
-//            assertEquals(message.getStructuredData().getJsonLdText(), jsonLd.getJsonLdText(), "Structured data body should match the input");
-//            StructuredData generatedJson = message.getStructuredData().get(0);
-//            StructuredData resultJson = result.getStructuredData().get(0);
-//            assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
-//        }
-//        assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");
     }
-     */
 }
