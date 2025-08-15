@@ -4,6 +4,8 @@ import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.extension.sender.StructuredMimeParseUtils;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMessage;
 
@@ -85,8 +87,9 @@ public class ImapEmailProcessor implements AutoCloseable {
                     MimeMessage mm = (MimeMessage)m;
 
                     StructuredMimeMessageWrapper ma = StructuredMimeParseUtils.parseMessage(mm);
-                        ma.setStructuredData(StructuredDataExtractionUtils.parseStructuredDataFromHtml(ma));
-                    List<StructuredData> structuredData = ma.getStructuredData();
+                    List<StructuredData> structuredDataList = StructuredDataExtractionUtils.parseStructuredDataFromHtml(ma);
+                    ma.setStructuredData(JsonLdUtils.convertStructuredData(structuredDataList));
+                    JsonLdWrapper structuredData = ma.getStructuredData();
                     if (structuredData != null) {
                         // Determine from
                         String from = "(from)";
@@ -96,12 +99,7 @@ public class ImapEmailProcessor implements AutoCloseable {
 
                         // Log it!
                         String logLine = formatLogLine(mm, from, structuredData);
-                        if (!structuredData.isEmpty()) {
-                            System.out.println(logLine);
-                        } else {
-                            // null && empty means we may have missed structured data
-                            mLogger.warning("The following message indicates usage of structured data, but no structured data was found: " + logLine);
-                        }
+                        System.out.println(logLine);
                     }
                 } catch (IOException|MessagingException|RuntimeException e) {
                     mLogger.warning(String.format(
@@ -183,7 +181,7 @@ public class ImapEmailProcessor implements AutoCloseable {
         toFetch.clear();
     }
 
-    private String formatLogLine(MimeMessage mm, String from, List<StructuredData> structuredData) throws MessagingException {
+    private String formatLogLine(MimeMessage mm, String from, JsonLdWrapper structuredData) throws MessagingException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy HH:mm");
         String dateStr = dateFormat.format(mm.getReceivedDate());
 

@@ -1,7 +1,7 @@
 package com.audriga.jakarta.sml.extension.mime;
 
 import com.audriga.jakarta.sml.extension.model.MimeTextContent;
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
@@ -9,12 +9,10 @@ import jakarta.mail.internet.MimeMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class StructuredMimeMessageWrapper {
-    private List<StructuredData> structuredData;
+    private JsonLdWrapper structuredData;
     private final MimeMessage mm;
     private MimeTextContent textBody;
     private MimeTextContent htmlBody;
@@ -30,26 +28,17 @@ public class StructuredMimeMessageWrapper {
         setFromStr(source.getFrom());
     }
 
-    public StructuredMimeMessageWrapper(MimeMessage source, List<StructuredData> structuredData) throws MessagingException {
+    public StructuredMimeMessageWrapper(MimeMessage source, JsonLdWrapper structuredData) throws MessagingException {
         this(source);
         this.structuredData = structuredData;
     }
 
-    public List<StructuredData> getStructuredData() {
+    public JsonLdWrapper getStructuredData() {
         return structuredData;
     }
 
-    public void setStructuredData(List<StructuredData> structuredData) {
+    public void setStructuredData(JsonLdWrapper structuredData) {
         this.structuredData = structuredData;
-    }
-
-    public void addStructuredData(StructuredData sd) {
-        if (structuredData != null) {
-            structuredData.add(sd);
-        } else {
-            structuredData = new ArrayList<>();
-            structuredData.add(sd);
-        }
     }
 
     public Address getSender() throws MessagingException {

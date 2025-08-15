@@ -1,7 +1,6 @@
 package com.audriga.jakarta.sml.extension.mime;
 
 import com.audriga.jakarta.sml.extension.model.MimeTextContent;
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMultipart;
@@ -23,14 +22,6 @@ public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<Multi
 
     @Override
     public StructuredMimeMessageWrapper build() throws MessagingException {
-        if (structuredData != null && structuredData.size() > 1) {
-            throw new IllegalArgumentException("Only one structured data object is supported for now.");
-        }
-
-        StructuredData structuredDataPart = null;
-        if (structuredData != null && !structuredData.isEmpty()) {
-            structuredDataPart = structuredData.get(0);
-        }
 
         StructuredMimeMessageWrapper sm = initMessage();
 
@@ -41,7 +32,7 @@ public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<Multi
 
         MimeMultipart mm =  new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.RELATED)
                 .addBodyPart(alternative)
-                .addBodyPartJsonLd(structuredDataPart, "utf-8")
+                .addBodyPartJsonLd(structuredData, "utf-8")
                 .build();
         sm.resetContent(mm);
 

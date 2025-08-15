@@ -2,7 +2,9 @@ package com.audriga.jakarta.sml;
 
 import com.audriga.jakarta.sml.extension.mime.StructuredMimeMessageWrapper;
 import com.audriga.jakarta.sml.extension.sender.StructuredMimeParseUtils;
+import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.MimeMessage;
@@ -16,6 +18,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -71,7 +74,8 @@ public class TestUtils {
         Session session = Session.getDefaultInstance(new Properties());
         MimeMessage msg = new MimeMessage(session, inputStream);
         StructuredMimeMessageWrapper smw = StructuredMimeParseUtils.parseMessage(msg);
-        smw.setStructuredData(StructuredDataExtractionUtils.parseStructuredDataFromHtml(smw));
+        List<StructuredData> structuredData = StructuredDataExtractionUtils.parseStructuredDataFromHtml(smw);
+        smw.setStructuredData(JsonLdUtils.convertStructuredData(structuredData));
         return smw;
     }
 }

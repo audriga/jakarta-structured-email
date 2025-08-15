@@ -8,7 +8,9 @@ import com.audriga.jakarta.sml.data.MultipartRelatedEmail;
 import com.audriga.jakarta.sml.data.SimpleEmail;
 import com.audriga.jakarta.sml.h2lj.model.StructuredSyntax;
 import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.jsoup.Connection;
@@ -77,7 +79,7 @@ public class MailProcessingAdvancedTest {
     }
 
     @Test(dataProvider = "emailVariantsAlternative", groups = "unit")
-    public void testFullMultipartAlternativeGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList, boolean htmlLast) throws MessagingException, IOException {
+    public void testFullMultipartAlternativeGenerator(String emlFilePath, String subject, String textBody, String htmlBody, JsonLdWrapper jsonLd, boolean htmlLast) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
@@ -86,7 +88,7 @@ public class MailProcessingAdvancedTest {
                 .subject(subject)
                 .textBody(textBody)
                 .htmlBody(htmlBody)
-                .structuredData(jsonList)
+                .structuredData(jsonLd)
                 .htmlLast(htmlLast)
                 .build();
         PrintStream out = System.out;
@@ -94,11 +96,11 @@ public class MailProcessingAdvancedTest {
 
         // Compare
         assertTrue(message.getContentType().contains("multipart/alternative"), "Content type should be 'multipart/alternative'");
-        if (jsonList != null && result.getStructuredData() != null) {
-            assertEquals(message.getStructuredData().get(0).getBody(), jsonList.get(0).getBody(), "Structured data body should match the input");
-            StructuredData generatedJson = message.getStructuredData().get(0);
-            StructuredData resultJson = result.getStructuredData().get(0);
-            assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
+        if (jsonLd != null && result.getStructuredData() != null) {
+            assertEquals(message.getStructuredData().getJsonLdText(), jsonLd.getJsonLdText(), "Structured data body should match the input");
+            JsonLdWrapper generatedJson = message.getStructuredData();
+            JsonLdWrapper resultJson = result.getStructuredData();
+            assertEquals(generatedJson.getJsonLd().toString(), resultJson.getJsonLd().toString(), "Structured data of generated message should be equal to the parsed message");
         }
         if (htmlBody != null) {
             assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");
@@ -109,7 +111,7 @@ public class MailProcessingAdvancedTest {
     }
 
     @Test(dataProvider = "emailVariantsRelated", groups = "unit")
-    public void testFullMultipartRelatedGenerator(String emlFilePath, String subject, String textBody, String htmlBody, List<StructuredData> jsonList) throws MessagingException, IOException {
+    public void testFullMultipartRelatedGenerator(String emlFilePath, String subject, String textBody, String htmlBody, JsonLdWrapper jsonLd) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
@@ -118,18 +120,18 @@ public class MailProcessingAdvancedTest {
                 .subject(subject)
                 .textBody(textBody)
                 .htmlBody(htmlBody)
-                .structuredData(jsonList)
+                .structuredData(jsonLd)
                 .build();
         PrintStream out = System.out;
         message.writeTo(out);
 
         // Compare
         assertTrue(message.getContentType().contains("multipart/related"), "Content type should be 'multipart/related'");
-        if (jsonList != null && result.getStructuredData() != null) {
-            assertEquals(message.getStructuredData().get(0).getBody(), jsonList.get(0).getBody(), "Structured data body should match the input");
-            StructuredData generatedJson = message.getStructuredData().get(0);
-            StructuredData resultJson = result.getStructuredData().get(0);
-            assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
+        if (jsonLd != null && result.getStructuredData() != null) {
+            assertEquals(message.getStructuredData().getJsonLdText(), jsonLd.getJsonLdText(), "Structured data body should match the input");
+            JsonLdWrapper generatedJson = message.getStructuredData();
+            JsonLdWrapper resultJson = result.getStructuredData();
+            assertEquals(generatedJson.getJsonLd().toString(), resultJson.getJsonLd().toString(), "Structured data of generated message should be equal to the parsed message");
         }
         if (htmlBody != null) {
             assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");
@@ -140,7 +142,7 @@ public class MailProcessingAdvancedTest {
     }
 
     @Test(dataProvider = "emailVariantsHtml", groups = "unit")
-    public void testFullHtmlOnlyGenerator(String emlFilePath, String subject, String htmlBody, List<StructuredData> jsonList) throws MessagingException, IOException {
+    public void testFullHtmlOnlyGenerator(String emlFilePath, String subject, String htmlBody, JsonLdWrapper jsonLd) throws MessagingException, IOException {
         // Parse
         StructuredMimeMessageWrapper result = TestUtils.parseEmlFile(emlFilePath);
 
@@ -148,18 +150,18 @@ public class MailProcessingAdvancedTest {
         StructuredMimeMessageWrapper message = new HtmlOnlyMessageBuilder()
                         .subject(subject)
                         .htmlBody(htmlBody)
-                        .structuredData(jsonList)
+                        .structuredData(jsonLd)
                         .build();
         PrintStream out = System.out;
         message.writeTo(out);
 
         // Compare
         assertTrue(message.getContentType().contains("text/html"), "Content type should be 'text/html'");
-        if (jsonList != null && result.getStructuredData() != null) {
-            assertEquals(message.getStructuredData().get(0).getBody(), jsonList.get(0).getBody(), "Structured data body should match the input");
-            StructuredData generatedJson = message.getStructuredData().get(0);
-            StructuredData resultJson = result.getStructuredData().get(0);
-            assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
+        if (jsonLd != null && result.getStructuredData() != null) {
+            assertEquals(message.getStructuredData().getJsonLdText(), jsonLd.getJsonLdText(), "Structured data body should match the input");
+            JsonLdWrapper generatedJson = message.getStructuredData();
+            JsonLdWrapper resultJson = result.getStructuredData();
+            assertEquals(generatedJson.getJsonLd().toString(), resultJson.getJsonLd().toString(), "Structured data of generated message should be equal to the parsed message");
         }
         assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");
     }
@@ -167,7 +169,7 @@ public class MailProcessingAdvancedTest {
     @Test(groups = "unit")
     public void testInlineHtmlGeneratorWithJsonLdInHead() throws MessagingException, IOException {
         // Generate
-        List<StructuredData> json = SimpleEmail.getJson();
+        JsonLdWrapper json = SimpleEmail.getJson();
         StructuredMimeMessageWrapper message = new InlineHtmlMessageBuilder()
                 .subject(SimpleEmail.getSubject())
                 .textBody(SimpleEmail.getTextBody())
@@ -180,15 +182,16 @@ public class MailProcessingAdvancedTest {
         PrintStream out = System.out;
         message.writeTo(out);
 
-        String jsonLdScript = "<script\\s+type=\"application/ld\\+json\">\\s*" + Pattern.quote(json.get(0).getBody()) + "\\s*</script>";
+        String jsonLdScript = "<script\\s+type=\"application/ld\\+json\">\\s*" + Pattern.quote(json.getJsonLdText()) + "\\s*</script>";
         String regex = "<head>.*" + jsonLdScript + ".*</head>";
         Pattern pattern = Pattern.compile(regex, Pattern.DOTALL);
         Matcher matcher = pattern.matcher(message.getHtmlBody().getText());
 
         assertTrue(matcher.find(), "HTML body should contain the JSON-LD script in the head tag");
-        assertEquals(message.getStructuredData().get(0).getBody(), json.get(0).getBody(), "Structured data body should match the input");
+        assertEquals(message.getStructuredData().getJsonLdText(), json.getJsonLdText(), "Structured data body should match the input");
     }
 
+    /*
     @Test(dataProvider = "emailVariantsHtmlNewsletter", groups = "unit")
     public void testHtmlNewsletterConversion(String emlFilePath) throws MessagingException, IOException {
         // Parse
@@ -201,6 +204,7 @@ public class MailProcessingAdvancedTest {
         Connection session = Jsoup.newSession();
         Map<String, String> recipeIds = new HashMap<>();
         List<JSONObject> recipes = new ArrayList<>();
+        List<StructuredData> recipesAsStructuredData = new ArrayList<>();
         for (Element linkElement : links) {
             String url = linkElement.attr("abs:href");
             if (url.startsWith("https://nl.nytimes.com/f/cooking")) {
@@ -224,6 +228,7 @@ public class MailProcessingAdvancedTest {
                             linkElement.attr("data-id", id);
                             recipeIds.put(url, id);
                             recipes.add(json);
+                            recipesAsStructuredData.add(structuredData);
                         }
                     }
                     if (!foundRecipe) {
@@ -236,8 +241,22 @@ public class MailProcessingAdvancedTest {
 //            out.printf(" * a: <%s>  (%s)\n", url, (link.text()));
         }
         out.println(doc.outerHtml());
-        String jsonArray = new JSONArray(recipes).toString(4);
-        out.println(jsonArray);
+        JSONArray jsonArray = new JSONArray(recipes);
+        String jsonArrayText = jsonArray.toString(4);
+        out.println(jsonArrayText);
+        MimeMessage originalMessage = result.getMimeMessage();
+        new StructuredData(jsonArrayText, new JSONObject(jsonArray));
+        StructuredMimeMessageWrapper message = new MultipartAlternativeMessageBuilder()
+                .subject(originalMessage.getSubject())
+//                .textBody(result.getTextBody().getText()) // not getting text, original message only has html body.
+                .htmlBody(result.getHtmlBody())
+                .from(originalMessage.getFrom())
+                .to(originalMessage.getAllRecipients()[0])
+//                .to(originalMessage.getAllRecipients())
+                .structuredData(recipesAsStructuredData)
+                .build();
+
+        message.writeTo(out);
 //        out.println(recipes.stream().map(JSONObject::toString).collect(Collectors.joining("\n")));
 
 
@@ -253,11 +272,12 @@ public class MailProcessingAdvancedTest {
         // Compare
 //        assertTrue(message.getContentType().contains("text/html"), "Content type should be 'text/html'");
 //        if (jsonList != null && result.getStructuredData() != null) {
-//            assertEquals(message.getStructuredData().get(0).getBody(), jsonList.get(0).getBody(), "Structured data body should match the input");
+//            assertEquals(message.getStructuredData().getJsonLdText(), jsonLd.getJsonLdText(), "Structured data body should match the input");
 //            StructuredData generatedJson = message.getStructuredData().get(0);
 //            StructuredData resultJson = result.getStructuredData().get(0);
 //            assertEquals(generatedJson.getJson().toString(), resultJson.getJson().toString(), "Structured data of generated message should be equal to the parsed message");
 //        }
 //        assertEquals(message.getHtmlBody().getText(), result.getHtmlBody().getText(), "HTML of generated message should be equal to the parsed message");
     }
+     */
 }

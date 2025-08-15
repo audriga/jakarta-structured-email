@@ -132,10 +132,10 @@ public class CliHandler {
 
                 for (StructuredMimeMessageWrapper msg : messages) {
                     if (outputDir != null) {
-                        if (msg.getStructuredData().isEmpty()) {
+                        if (msg.getStructuredData() == null) {
                             FileDumper.dump(msg, f, outputDir);
                         } else {
-                            for (StructuredData structuredDataPart : msg.getStructuredData()) {
+                            for (StructuredData structuredDataPart : msg.getStructuredData().getStructuredDataList()) {
                                 FileDumper.dump(structuredDataPart, msg, f, outputDir);
                             }
                         }
@@ -203,13 +203,13 @@ public class CliHandler {
     private static void printStats(Map<Folder, List<StructuredMimeMessageWrapper>> res, Duration runtime, int totalMessages) {
         long jsonLdMailCount = res.values().stream()
                 .flatMap(List::stream)
-                .flatMap(msg -> msg.getStructuredData().stream())
+                .flatMap(msg -> msg.getStructuredData().getStructuredDataList().stream())
                 .filter(data -> data.getSyntax() == StructuredSyntax.JSON_LD)
                 .count();
 
         long microdataMailCount = res.values().stream()
                 .flatMap(List::stream)
-                .flatMap(msg -> msg.getStructuredData().stream())
+                .flatMap(msg -> msg.getStructuredData().getStructuredDataList().stream())
                 .filter(data -> data.getSyntax() == StructuredSyntax.MICRODATA)
                 .count();
 

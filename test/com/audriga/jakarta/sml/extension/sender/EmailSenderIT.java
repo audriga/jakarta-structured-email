@@ -3,7 +3,7 @@ package com.audriga.jakarta.sml.extension.sender;
 import com.audriga.jakarta.sml.TestUtils;
 import com.audriga.jakarta.sml.data.SimpleEmail;
 import com.audriga.jakarta.sml.extension.mime.*;
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.FileDataSource;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
@@ -14,8 +14,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +31,7 @@ public class EmailSenderIT {
         String htmlBody = null;
         FileDataSource attachment = null;
         String attachmentName = null;
-        List<StructuredData> structuredDataList = new ArrayList<>();
+        JsonLdWrapper jsonLdWrapper = null;
 
         for (int i = 1; i < parts.length; i++) {
             switch (parts[i]) {
@@ -47,7 +45,7 @@ public class EmailSenderIT {
                     }
                     break;
                 case "json":
-                    structuredDataList.addAll(SimpleEmail.getJson());
+                    jsonLdWrapper = SimpleEmail.getJson();
                     break;
                 case "attachment":
                     attachment = SimpleEmail.getAttachment();
@@ -73,7 +71,7 @@ public class EmailSenderIT {
                         .textBody(textBody)
                         .htmlBody(htmlBody)
                         .htmlLast(htmlLast)
-                        .structuredData(structuredDataList)
+                        .structuredData(jsonLdWrapper)
                         .to(singleTo)
                         .from(from)
                         .addAttachment(attachment, attachmentName)
@@ -83,7 +81,7 @@ public class EmailSenderIT {
                 message = new HtmlOnlyMessageBuilder()
                         .subject(subject)
                         .htmlBody(htmlBody)
-                        .structuredData(structuredDataList)
+                        .structuredData(jsonLdWrapper)
                         .to(singleTo)
                         .from(from)
                         .build();
@@ -94,7 +92,7 @@ public class EmailSenderIT {
                         .textBody(textBody)
                         .htmlBody(htmlBody)
                         .htmlLast(htmlLast)
-                        .structuredData(structuredDataList)
+                        .structuredData(jsonLdWrapper)
                         .to(singleTo)
                         .from(from)
                         .build();
@@ -104,7 +102,7 @@ public class EmailSenderIT {
                         .subject(subject)
                         .textBody(textBody)
                         .htmlBody(htmlBody)
-                        .structuredData(structuredDataList)
+                        .structuredData(jsonLdWrapper)
                         .to(singleTo)
                         .from(from)
                         .build();

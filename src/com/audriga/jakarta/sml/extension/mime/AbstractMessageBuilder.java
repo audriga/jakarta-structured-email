@@ -1,15 +1,13 @@
 package com.audriga.jakarta.sml.extension.mime;
 
 import com.audriga.jakarta.sml.extension.model.MimeTextContent;
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
-import com.audriga.jakarta.sml.h2lj.model.StructuredSyntax;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.DataHandler;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
 import jakarta.mail.Session;
 import jakarta.mail.internet.InternetAddress;
 
-import java.util.List;
 import java.util.Properties;
 
 public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>> {
@@ -19,7 +17,7 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
 
     protected String subject;
     protected MimeTextContent htmlBody;
-    protected List<StructuredData> structuredData;
+    protected JsonLdWrapper structuredData;
     protected Address[] from;
     protected Address to;
     protected Session session;
@@ -66,7 +64,7 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
         return self();
     }
 
-    public T structuredData(List<StructuredData> structuredData) {
+    public T structuredData(JsonLdWrapper structuredData) {
         this.structuredData = structuredData;
         return self();
     }
@@ -75,24 +73,10 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
 
     public abstract StructuredMimeMessageWrapper build() throws MessagingException;
 
-    // TODO move to dedicated child class?
-    protected static StructuredData checkStructuredDataToInsert(List<StructuredData> structuredData) {
-        if (structuredData != null && structuredData.size() > 1) {
-            throw new IllegalArgumentException("Only one structured data object is supported for now.");
-        }
 
-        if (structuredData != null && !structuredData.isEmpty()) {
-            if (structuredData.get(0).getSyntax() != StructuredSyntax.JSON_LD) {
-                throw new IllegalArgumentException("Only JSON-LD is supported for now.");
-            }
-            return structuredData.get(0);
-        } else {
-            return null;
-        }
-    }
 
     // TODO move to dedicated child class?
-    protected static String insertJsonLdInHtml(MimeTextContent htmlContent, StructuredData structuredData, String htmlTag) {
+    protected static String insertJsonLdInHtml(MimeTextContent htmlContent, JsonLdWrapper structuredData, String htmlTag) {
         if (htmlContent == null) {
             return null;
         }
@@ -110,7 +94,7 @@ public abstract class AbstractMessageBuilder<T extends AbstractMessageBuilder<T>
         int index = html.indexOf(htmlTag);
         if (index != -1) {
             int insertPosition = index + htmlTag.length();
-            return html.substring(0, insertPosition) + "\n<script type=\"" + StructuredData.MIME_TYPE + "\">\n" + structuredData.getBody() + "\n</script>" + html.substring(insertPosition);
+            return html.substring(0, insertPosition) + "\n<script type=\"" + JsonLdWrapper.MIME_TYPE + "\">\n" + structuredData.getJsonLdText() + "\n</script>" + html.substring(insertPosition);
         } else {
             throw new IllegalArgumentException("HTML does not contain <head> tag.");
         }

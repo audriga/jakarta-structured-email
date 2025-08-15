@@ -3,6 +3,8 @@ package com.audriga.jakarta.sml.data;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.h2lj.parser.StructuredDataExtractionUtils;
 import com.audriga.jakarta.sml.TestUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.FileDataSource;
 
 import java.net.URISyntaxException;
@@ -37,14 +39,16 @@ public class SimpleEmail {
         return textBody;
     }
 
-    public static List<StructuredData> getJson() {
+    public static JsonLdWrapper getJson() {
         String json = TestUtils.readResource("jsonld/event-reservation-better.json");
-        return StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
+        List<StructuredData> structuredDataList = StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
+        return JsonLdUtils.convertStructuredData(structuredDataList);
     }
 
-    public static List<StructuredData> getJsonArray() {
+    public static JsonLdWrapper getJsonArray() {
         String json = TestUtils.readResource("jsonld/promotion-card.json");
-        return StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
+        List<StructuredData> structuredDataList = StructuredDataExtractionUtils.parseStructuredDataFromJsonStr(json);
+        return JsonLdUtils.convertStructuredData(structuredDataList);
     }
 
     public static FileDataSource getAttachment() throws URISyntaxException {
