@@ -236,7 +236,8 @@ public class MailProcessingAdvancedTest {
             }
 //            out.printf(" * a: <%s>  (%s)\n", url, (link.text()));
         }
-        out.println(doc.outerHtml());
+        String modifiedHTML = doc.outerHtml();
+        out.println(modifiedHTML);
         JSONArray jsonArray = new JSONArray(recipes);
         String jsonArrayText = jsonArray.toString(4);
         out.println(jsonArrayText);
@@ -245,11 +246,9 @@ public class MailProcessingAdvancedTest {
         StructuredMimeMessageWrapper message = new MultipartAlternativeMessageBuilder()
                 .subject(originalMessage.getSubject())
 //                .textBody(result.getTextBody().getText()) // not getting text, original message only has html body.
-                .htmlBody(htmlBody.getText())
-//                .htmlBody(htmlBody) // todo: Document limitation: Encoding "quoted-printable" will throw UnsupportedEncodingException
+                .htmlBody(modifiedHTML)
                 .from(originalMessage.getFrom())
                 .to(originalMessage.getAllRecipients()[0])
-//                .to(originalMessage.getAllRecipients()) // todo: Document limitation: Only one recipient
                 .structuredData(new JsonLdWrapper(jsonArray))
                 .build();
 
