@@ -1,0 +1,108 @@
+Date: Wed, 19 Feb 2025 16:54:38 +0100 (CET)
+Message-ID: <948424584.34.1739980478937@sadatoni>
+Subject: Make Email Better Again!
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_Part_33_1273879638.1739980478937"
+
+------=_Part_33_1273879638.1739980478937
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+Event Reservation Confirmation
+
+Dear Noah Baumbach,
+
+Thank you for your reservation. Here are the details:
+
+Reservation Number: MBE12345
+Event Name: Make Better Email 2024
+Start Date: 2024-10-30
+Location:
+    Isode Ltd
+    14 Castle Mews
+    Hampton TW12 2NP
+    UK
+
+We look forward to seeing you at the event!
+
+Best regards,
+The Event Team
+------=_Part_33_1273879638.1739980478937
+Content-Type: application/ld+json; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+{
+    "@context":              "http://schema.org",
+    "@type":                 "EventReservation",
+    "reservationId":         "MBE12345",
+    "underName": {
+        "@type":               "Person",
+        "name":                "Noah Baumbach"
+    },
+    "reservationFor": {
+        "@type":               "Event",
+        "name":                "Make Better Email 2024",
+        "startDate":           "2024-10-15",
+        "organizer": {
+            "@type":            "Organization",
+            "name":             "Fastmail Pty Ltd.",
+            "logo":             "https://www.fastmail.com/assets/images/FM-Logo-RGB-IiFj8alCx1-3073.webp"
+        },
+        "location": {
+            "@type":             "Place",
+            "name":              "Isode Ltd",
+            "address": {
+                "@type":           "PostalAddress",
+                "streetAddress":   "14 Castle Mews",
+                "addressLocality": "Hampton",
+                "addressRegion":   "Greater London",
+                "postalCode":      "TW12 2NP",
+                "addressCountry":  "UK"
+            }
+        }
+    }
+}
+------=_Part_33_1273879638.1739980478937
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Event Reservation</title>
+</head>
+<body>
+<h1>Event Reservation Confirmation</h1>
+<p>Dear Noah Baumbach,</p>
+<p>Thank you for your reservation. Here are the details:</p>
+<table>
+    <tr>
+        <td><strong>Reservation Number:</strong></td>
+        <td>MBE12345</td>
+    </tr>
+    <tr>
+        <td><strong>Event Name:</strong></td>
+        <td>Make Better Email 2024</td>
+    </tr>
+    <tr>
+        <td><strong>Start Date:</strong></td>
+        <td>2024-10-30</td>
+    </tr>
+    <tr>
+        <td><strong>Location:</strong></td>
+        <td>
+            Isode Ltd<br>
+            14 Castle Mews<br>
+            Hampton TW12 2NP<br>
+            UK
+        </td>
+    </tr>
+</table>
+<p>We look forward to seeing you at the event!</p>
+<p>Best regards,<br>The Event Team</p>
+</body>
+</html>
+------=_Part_33_1273879638.1739980478937--

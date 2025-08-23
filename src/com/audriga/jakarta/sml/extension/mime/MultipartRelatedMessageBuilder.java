@@ -4,6 +4,7 @@ import com.audriga.jakarta.sml.extension.model.MimeTextContent;
 import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeBodyPart;
 import jakarta.mail.internet.MimeMultipart;
 
 public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<MultipartRelatedMessageBuilder> {
@@ -41,7 +42,8 @@ public class MultipartRelatedMessageBuilder extends AbstractMessageBuilder<Multi
 
         MimeMultipart mm =  new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.RELATED)
                 .addBodyPart(alternative)
-                .addBodyPartJsonLd(structuredDataPart, "utf-8")
+                // TODO Actually reference json-ld in related-text-html-json example via CID or similar
+                .addBodyPartJsonLd(structuredDataPart, "utf-8", MimeBodyPart.INLINE)
                 .build();
         sm.resetContent(mm);
 

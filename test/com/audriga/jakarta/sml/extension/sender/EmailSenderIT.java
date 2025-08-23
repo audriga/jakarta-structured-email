@@ -7,6 +7,7 @@ import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.activation.FileDataSource;
 import jakarta.mail.Address;
 import jakarta.mail.MessagingException;
+import jakarta.mail.Part;
 import jakarta.mail.internet.InternetAddress;
 import org.testng.annotations.Test;
 
@@ -16,6 +17,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,17 +25,22 @@ import java.util.logging.Logger;
 public class EmailSenderIT {
     EmailSender sender;
     private static final Logger mLogger = Logger.getLogger(EmailSenderIT.class.getName());
+    private static final String INLINE_BUILDER = "inline";
+    private static final String HTML_BUILDER = "html";
+    private static final String ALT_BUILDER = "alternative";
+    private static final String RELATED_BUILDER = "related";
 
     private void sendEmail(Address[] to, Address[] from, String exampleName) throws MessagingException, URISyntaxException {
         String[] parts = exampleName.split("-");
         String builderType = parts[0];
         boolean htmlLast = false;
-        String subject = SimpleEmail.getSubject();
+        String subject = String.format("[%s] %s", exampleName, SimpleEmail.getSubject());
         String textBody = null;
         String htmlBody = null;
         FileDataSource attachment = null;
         String attachmentName = null;
         List<StructuredData> structuredDataList = new ArrayList<>();
+        String disposition = null;
 
         for (int i = 1; i < parts.length; i++) {
             switch (parts[i]) {
@@ -53,6 +60,12 @@ public class EmailSenderIT {
                     attachment = SimpleEmail.getAttachment();
                     attachmentName = SimpleEmail.getAttachmentName();
                     break;
+                case "inline":
+                    disposition = Part.INLINE;
+                    if (!Objects.equals(builderType, ALT_BUILDER)) {
+                        mLogger.log(Level.WARNING, "For now inline disposition is only supported for multipart alternative Messages.");
+                    }
+                    break;
                 default:
                     throw new IllegalArgumentException(
                             String.format("Unknown body part '%s' in example name '%s' taken from email subject.",
@@ -67,7 +80,7 @@ public class EmailSenderIT {
         StructuredMimeMessageWrapper message;
 
         switch (builderType) {
-            case "inline":
+            case INLINE_BUILDER:
                 message = new InlineHtmlMessageBuilder()
                         .subject(subject)
                         .textBody(textBody)
@@ -79,7 +92,7 @@ public class EmailSenderIT {
                         .addAttachment(attachment, attachmentName)
                         .build();
                 break;
-            case "html":
+            case HTML_BUILDER:
                 message = new HtmlOnlyMessageBuilder()
                         .subject(subject)
                         .htmlBody(htmlBody)
@@ -88,8 +101,9 @@ public class EmailSenderIT {
                         .from(from)
                         .build();
                 break;
-            case "alternative":
+            case ALT_BUILDER:
                 message = new MultipartAlternativeMessageBuilder()
+                        .disposition(disposition)
                         .subject(subject)
                         .textBody(textBody)
                         .htmlBody(htmlBody)
@@ -99,7 +113,7 @@ public class EmailSenderIT {
                         .from(from)
                         .build();
                 break;
-            case "related":
+            case RELATED_BUILDER:
                 message = new MultipartRelatedMessageBuilder()
                         .subject(subject)
                         .textBody(textBody)

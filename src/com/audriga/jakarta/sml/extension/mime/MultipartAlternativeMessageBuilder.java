@@ -8,6 +8,7 @@ import jakarta.mail.MessagingException;
 public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<MultipartAlternativeMessageBuilder> {
     private MimeTextContent textBody;
     private boolean htmlLast = true;
+    private String disposition;
 
     public MultipartAlternativeMessageBuilder textBody(String textBody) {
         if (textBody != null) {
@@ -18,6 +19,11 @@ public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<M
 
     public MultipartAlternativeMessageBuilder htmlLast(boolean htmlLast) {
         this.htmlLast = htmlLast;
+        return this;
+    }
+
+    public MultipartAlternativeMessageBuilder disposition(String disposition) {
+        this.disposition = disposition;
         return this;
     }
 
@@ -42,12 +48,12 @@ public class MultipartAlternativeMessageBuilder extends AbstractMessageBuilder<M
         MimeMultipartBuilder multipartBuilder = new MimeMultipartBuilder(MimeMultipartBuilder.MULTIPART.ALTERNATIVE);
         if (htmlLast) {
             multipartBuilder.addBodyPartText(textBody);
-            multipartBuilder.addBodyPartJsonLd(structuredDataPart);
+            multipartBuilder.addBodyPartJsonLd(structuredDataPart, "utf-8", disposition);
             multipartBuilder.addBodyPartHtml(htmlBody);
         } else {
             multipartBuilder.addBodyPartText(textBody);
             multipartBuilder.addBodyPartHtml(htmlBody);
-            multipartBuilder.addBodyPartJsonLd(structuredDataPart);
+            multipartBuilder.addBodyPartJsonLd(structuredDataPart, "utf-8", disposition);
         }
         sm.resetContent(multipartBuilder.build());
 
