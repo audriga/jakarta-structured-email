@@ -1,10 +1,7 @@
 package com.audriga.jakarta.sml.extension.sender;
 
 import com.audriga.jakarta.sml.TestUtils;
-import com.audriga.jakarta.sml.data.AbstractEmail;
-import com.audriga.jakarta.sml.data.ExampleEmail;
-import com.audriga.jakarta.sml.data.MicrodataEmail;
-import com.audriga.jakarta.sml.data.RDFAEmail;
+import com.audriga.jakarta.sml.data.*;
 import com.audriga.jakarta.sml.extension.mime.*;
 import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.FileDataSource;
@@ -110,6 +107,11 @@ public class EmailSenderTest {
     @Test
     public void testSendMicrodataExample() throws MessagingException, URISyntaxException {
         sendEmail(to, from, new MicrodataEmail());
+    }
+
+    @Test
+    public void testSendMicrodataAlternativeExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new MicrodataAlternativeEmail());
     }
 
 }

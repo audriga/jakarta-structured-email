@@ -6,10 +6,10 @@ import jakarta.activation.FileDataSource;
 
 import java.net.URISyntaxException;
 
-public class RDFAEmail extends AbstractEmail {
+public class MicrodataAlternativeEmail extends AbstractEmail {
 
-    public RDFAEmail() {
-        super("I am a text body!", "RDFa Mail", TestUtils.readResource("rdfa/simple-example.html") , "inline", false);
+    public MicrodataAlternativeEmail() {
+        super("Text body in Microdata Email!!!", "Microdata Email with builder type alternative", TestUtils.readResource("microdata/simple-product.html"), "alternative", true);
     }
 
     @Override
