@@ -6,11 +6,10 @@ import jakarta.activation.FileDataSource;
 
 import java.net.URISyntaxException;
 
-public class RDFAEmail extends AbstractEmail {
+public class MicrodataEmail extends AbstractEmail {
 
-    public RDFAEmail() {
-        // Text body is not displayed for sending RDFas with inline
-        super("I am a text body!", "RDFa Mail", TestUtils.readResource("rdfa/simple-example.html") , "inline", false);
+    public MicrodataEmail() {
+        super(null, "Microdata Email", TestUtils.readResource("microdata/simple-product.html"), "html", false);
     }
 
     @Override

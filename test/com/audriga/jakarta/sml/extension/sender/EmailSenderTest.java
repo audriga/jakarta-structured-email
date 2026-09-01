@@ -3,7 +3,8 @@ package com.audriga.jakarta.sml.extension.sender;
 import com.audriga.jakarta.sml.TestUtils;
 import com.audriga.jakarta.sml.data.AbstractEmail;
 import com.audriga.jakarta.sml.data.ExampleEmail;
-import com.audriga.jakarta.sml.data.SimpleEmail;
+import com.audriga.jakarta.sml.data.MicrodataEmail;
+import com.audriga.jakarta.sml.data.RDFAEmail;
 import com.audriga.jakarta.sml.extension.mime.*;
 import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.FileDataSource;
@@ -17,8 +18,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +31,7 @@ public class EmailSenderTest {
     private void sendEmail(Address[] to, Address[] from, AbstractEmail email) throws MessagingException, URISyntaxException {
         String builderType = email.getBuilderType();
         boolean htmlLast = email.isHtmlLast();
-        String subject = SimpleEmail.getSubject();
+        String subject = email.getSubject();
         String textBody = email.getTextBody();
         String htmlBody = email.getHtmlBody();
         FileDataSource attachment = email.getAttachment();
@@ -41,54 +40,44 @@ public class EmailSenderTest {
 
         Address singleTo = to[0];
         mLogger.log(Level.INFO, "Sender return address is " + singleTo);
-        StructuredMimeMessageWrapper message;
+        StructuredMimeMessageWrapper message = switch (email.getBuilderType()) {
+            case "inline" -> new InlineHtmlMessageBuilder()
+                    .subject(subject)
+                    .textBody(textBody)
+                    .htmlBody(htmlBody)
+                    .htmlLast(htmlLast)
+                    .structuredData(jsonLdWrapper)
+                    .to(singleTo)
+                    .from(from)
+                    .addAttachment(attachment, attachmentName)
+                    .build();
+            case "html" -> new HtmlOnlyMessageBuilder()
+                    .subject(subject)
+                    .htmlBody(htmlBody)
+                    .structuredData(jsonLdWrapper)
+                    .to(singleTo)
+                    .from(from)
+                    .build();
+            case "alternative" -> new MultipartAlternativeMessageBuilder()
+                    .subject(subject)
+                    .textBody(textBody)
+                    .htmlBody(htmlBody)
+                    .htmlLast(htmlLast)
+                    .structuredData(jsonLdWrapper)
+                    .to(singleTo)
+                    .from(from)
+                    .build();
+            case "related" -> new MultipartRelatedMessageBuilder()
+                    .subject(subject)
+                    .textBody(textBody)
+                    .htmlBody(htmlBody)
+                    .structuredData(jsonLdWrapper)
+                    .to(singleTo)
+                    .from(from)
+                    .build();
+            default -> throw new IllegalArgumentException("Unknown builder type: " + builderType);
+        };
 
-        switch (email.getBuilderType()) {
-            case "inline":
-                message = new InlineHtmlMessageBuilder()
-                        .subject(subject)
-                        .textBody(textBody)
-                        .htmlBody(htmlBody)
-                        .htmlLast(htmlLast)
-                        .structuredData(jsonLdWrapper)
-                        .to(singleTo)
-                        .from(from)
-                        .addAttachment(attachment, attachmentName)
-                        .build();
-                break;
-            case "html":
-                message = new HtmlOnlyMessageBuilder()
-                        .subject(subject)
-                        .htmlBody(htmlBody)
-                        .structuredData(jsonLdWrapper)
-                        .to(singleTo)
-                        .from(from)
-                        .build();
-                break;
-            case "alternative":
-                message = new MultipartAlternativeMessageBuilder()
-                        .subject(subject)
-                        .textBody(textBody)
-                        .htmlBody(htmlBody)
-                        .htmlLast(htmlLast)
-                        .structuredData(jsonLdWrapper)
-                        .to(singleTo)
-                        .from(from)
-                        .build();
-                break;
-            case "related":
-                message = new MultipartRelatedMessageBuilder()
-                        .subject(subject)
-                        .textBody(textBody)
-                        .htmlBody(htmlBody)
-                        .structuredData(jsonLdWrapper)
-                        .to(singleTo)
-                        .from(from)
-                        .build();
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown builder type: " + builderType);
-        }
         sender.sendEmail(message);
     }
 
@@ -111,6 +100,16 @@ public class EmailSenderTest {
     @Test
     public void testSendSmlEmailExample() throws MessagingException, URISyntaxException {
         sendEmail(to, from, new ExampleEmail());
+    }
+
+    @Test
+    public void testSendRdfAExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new RDFAEmail());
+    }
+
+    @Test
+    public void testSendMicrodataExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new MicrodataEmail());
     }
 
 }
