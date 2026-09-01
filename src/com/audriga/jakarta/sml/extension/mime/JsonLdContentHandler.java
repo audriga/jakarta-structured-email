@@ -1,15 +1,15 @@
 package com.audriga.jakarta.sml.extension.mime;
 
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.ActivationDataFlavor;
 import jakarta.activation.DataSource;
 import org.eclipse.angus.mail.handlers.text_plain;
 
 import java.io.*;
 
-public class StructuredDataContentHandler extends text_plain {
+public class JsonLdContentHandler extends text_plain {
     private static final ActivationDataFlavor[] FLAVORS = {
-            new ActivationDataFlavor(StructuredData.class, StructuredData.MIME_TYPE, "Structured Data")
+            new ActivationDataFlavor(JsonLdWrapper.class, JsonLdWrapper.MIME_TYPE, "Structured Data")
     };
 
     @Override
@@ -41,11 +41,11 @@ public class StructuredDataContentHandler extends text_plain {
             throw new IOException("\"" + getDataFlavors()[0].getMimeType() +
                     "\" DataContentHandler is empty, " +
                     "writing it would result in NullPointerException.");
-        if (!(obj instanceof StructuredData))
+        if (!(obj instanceof JsonLdWrapper))
             throw new IOException("\"" + getDataFlavors()[0].getMimeType() +
-                    "\" DataContentHandler requires JsonStructuredData object, " +
+                    "\" DataContentHandler requires JsonLdWrapper object, " +
                     "was given object of type " + obj.getClass());
-        StructuredData structuredData = (StructuredData) obj;
-        super.writeTo(structuredData.getBody(), mimeType, os);
+        JsonLdWrapper jsonLdWrapper = (JsonLdWrapper) obj;
+        super.writeTo(jsonLdWrapper.getJsonLdText(), mimeType, os);
     }
 }

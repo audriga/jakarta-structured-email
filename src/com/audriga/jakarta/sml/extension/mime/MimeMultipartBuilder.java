@@ -1,7 +1,7 @@
 package com.audriga.jakarta.sml.extension.mime;
 
 import com.audriga.jakarta.sml.extension.model.MimeTextContent;
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.DataHandler;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeBodyPart;
@@ -90,19 +90,19 @@ public class MimeMultipartBuilder {
 		return this;
 	}
 
-	public MimeMultipartBuilder addBodyPartJsonLd(StructuredData structuredData) throws MessagingException {
+	public MimeMultipartBuilder addBodyPartJsonLd(JsonLdWrapper structuredData) throws MessagingException {
 		if (structuredData == null) {
 			return this;
 		}
 		return addBodyPartJsonLd(structuredData, "utf-8");
 	}
 
-	public MimeMultipartBuilder addBodyPartJsonLd(StructuredData structuredData, String jsonLdEncoding) throws MessagingException {
+	public MimeMultipartBuilder addBodyPartJsonLd(JsonLdWrapper structuredData, String jsonLdEncoding) throws MessagingException {
 		if (structuredData == null) {
 			return this;
 		}
 		MimeBodyPart bodyPart = new MimeBodyPart();
-		String bodyPartType = StructuredData.MIME_TYPE + "; charset=" + jsonLdEncoding;
+		String bodyPartType = JsonLdWrapper.MIME_TYPE + "; charset=" + jsonLdEncoding;
 		bodyPart.setContent(structuredData, bodyPartType);
 		m.addBodyPart(bodyPart);
 		return this;

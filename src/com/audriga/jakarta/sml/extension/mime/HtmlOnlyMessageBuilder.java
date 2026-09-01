@@ -1,7 +1,6 @@
 package com.audriga.jakarta.sml.extension.mime;
 
 import com.audriga.jakarta.sml.extension.model.MimeTextContent;
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
 
@@ -20,8 +19,7 @@ public class HtmlOnlyMessageBuilder extends AbstractMessageBuilder<HtmlOnlyMessa
 
     @Override
     public StructuredMimeMessageWrapper build() throws MessagingException {
-        StructuredData jsonStructuredData = checkStructuredDataToInsert(structuredData);
-        String html = insertJsonLdInHtml(htmlBody, jsonStructuredData, htmlTag);
+        String html = insertJsonLdInHtml(htmlBody, structuredData, htmlTag);
 
         StructuredMimeMessageWrapper sm = initMessage();
 

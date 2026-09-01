@@ -1,14 +1,14 @@
 package com.audriga.jakarta.sml.extension.mime;
 
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.DataContentHandler;
 import jakarta.activation.DataContentHandlerFactory;
 
 public class StructuredDataContentHandlerFactory implements DataContentHandlerFactory {
     @Override
     public DataContentHandler createDataContentHandler(String mimeType) {
-        if (StructuredData.MIME_TYPE.equals(mimeType)) {
-            return new StructuredDataContentHandler();
+        if (JsonLdWrapper.MIME_TYPE.equals(mimeType)) {
+            return new JsonLdContentHandler();
         }
         return null;
     }
