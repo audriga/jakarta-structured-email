@@ -114,4 +114,9 @@ public class EmailSenderTest {
         sendEmail(to, from, new MicrodataAlternativeEmail());
     }
 
+    @Test
+    public void testSendJSONLDExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new JSONLDEmail());
+    }
+
 }
