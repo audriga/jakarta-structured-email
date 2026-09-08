@@ -119,4 +119,9 @@ public class EmailSenderTest {
         sendEmail(to, from, new JSONLDEmail());
     }
 
+    @Test
+    public void testAttachmentExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new AttachmentEmail());
+    }
+
 }
