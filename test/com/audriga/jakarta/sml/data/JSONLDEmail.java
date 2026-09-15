@@ -12,7 +12,7 @@ import java.util.List;
 
 public class JSONLDEmail extends AbstractEmail {
     public JSONLDEmail() {
-        super(null, "JSONLD Email", TestUtils.readResource("html-body/simple-body.html"), "html", false);
+        super(null, "JSONLD Email", TestUtils.readResource("html-body/simple-body.html"), "related", false);
     }
 
     @Override

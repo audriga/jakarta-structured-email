@@ -124,4 +124,9 @@ public class EmailSenderTest {
         sendEmail(to, from, new AttachmentEmail());
     }
 
+    @Test
+    public void testGlobalDataAttributesExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new GlobalDataAttributeEmail());
+    }
+
 }
