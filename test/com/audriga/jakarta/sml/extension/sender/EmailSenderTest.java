@@ -25,7 +25,7 @@ public class EmailSenderTest {
     private Address[] to;
     private Address[] from;
 
-    private void sendEmail(Address[] to, Address[] from, AbstractEmail email) throws MessagingException, URISyntaxException {
+    private void sendEmail(AbstractEmail email) throws MessagingException, URISyntaxException {
         String builderType = email.getBuilderType();
         boolean htmlLast = email.isHtmlLast();
         String subject = email.getSubject();
@@ -96,41 +96,41 @@ public class EmailSenderTest {
 
     @Test
     public void testSendSmlEmailExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new ExampleEmail());
+        sendEmail(new ExampleEmail());
     }
 
     @Test
     public void testSendRdfAExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new RdfAEmail());
+        sendEmail(new RdfAEmail());
     }
 
     @Test
     public void testSendMicrodataExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new MicrodataEmail());
+        sendEmail(new MicrodataEmail());
     }
 
     @Test
     public void testSendMicrodataAlternativeExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new MicrodataAlternativeEmail());
+        sendEmail(new MicrodataAlternativeEmail());
     }
 
     @Test
     public void testSendJSONLDExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new JsonLdEmail());
+        sendEmail(new JsonLdEmail());
     }
 
     @Test
     public void testAttachmentExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new AttachmentEmail());
+        sendEmail(new AttachmentEmail());
     }
 
     @Test
     public void testGlobalDataAttributesExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new GlobalDataAttributeEmail());
+        sendEmail(new GlobalDataAttributeEmail());
     }
 
     @Test
     public void testSendJSONLDInlineExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new JsonLdInlineEmail());
+        sendEmail(new JsonLdInlineEmail());
     }
 }
