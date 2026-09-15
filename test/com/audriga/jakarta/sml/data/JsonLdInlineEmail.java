@@ -6,10 +6,9 @@ import jakarta.activation.FileDataSource;
 
 import java.net.URISyntaxException;
 
-public class RDFAEmail extends AbstractEmail {
-
-    public RDFAEmail() {
-        super("I am a text body!", "RDFa Mail", TestUtils.readResource("rdfa/simple-example.html") , "inline", false);
+public class JsonLdInlineEmail extends AbstractEmail{
+    public JsonLdInlineEmail() {
+        super(null, "JSON-LD Email inline", TestUtils.readResource("html-body/jsonld-inline-body.html"), "html", false);
     }
 
     @Override

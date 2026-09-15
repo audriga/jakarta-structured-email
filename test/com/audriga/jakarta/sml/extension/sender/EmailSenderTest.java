@@ -101,7 +101,7 @@ public class EmailSenderTest {
 
     @Test
     public void testSendRdfAExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new RDFAEmail());
+        sendEmail(to, from, new RdfAEmail());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class EmailSenderTest {
 
     @Test
     public void testSendJSONLDExample() throws MessagingException, URISyntaxException {
-        sendEmail(to, from, new JSONLDEmail());
+        sendEmail(to, from, new JsonLdEmail());
     }
 
     @Test
@@ -129,4 +129,8 @@ public class EmailSenderTest {
         sendEmail(to, from, new GlobalDataAttributeEmail());
     }
 
+    @Test
+    public void testSendJSONLDInlineExample() throws MessagingException, URISyntaxException {
+        sendEmail(to, from, new JsonLdInlineEmail());
+    }
 }

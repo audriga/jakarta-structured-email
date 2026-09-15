@@ -1,11 +1,9 @@
 package com.audriga.jakarta.sml.data;
 
-import com.audriga.jakarta.sml.h2lj.model.StructuredData;
 import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
 import jakarta.activation.FileDataSource;
 
 import java.net.URISyntaxException;
-import java.util.List;
 
 public abstract class AbstractEmail {
 

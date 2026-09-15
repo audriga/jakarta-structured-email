@@ -10,8 +10,8 @@ import jakarta.activation.FileDataSource;
 import java.net.URISyntaxException;
 import java.util.List;
 
-public class JSONLDEmail extends AbstractEmail {
-    public JSONLDEmail() {
+public class JsonLdEmail extends AbstractEmail {
+    public JsonLdEmail() {
         super(null, "JSONLD Email", TestUtils.readResource("html-body/simple-body.html"), "related", false);
     }
 
