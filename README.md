@@ -1,5 +1,3 @@
-# Jakarta Structured Email
-
 Jakarta Structured Email provides extensions for the Java [Jakarta Mail](https://jakartaee.github.io/mail-api/) library for **creating** and **parsing** email messages containing structured data ([structured email](https://structured.email)).
 
 ## Features
@@ -20,6 +18,8 @@ Note that there is ongoing discussion about alternative approaches of embedded s
 The goal of this library is to support and showcase multiple possible approaches, allowing users to easily adopt an ultimately standardized approach.
 
 ### Creating Structured Email messages
+
+https://web.audriga.com/wiki/index.php/JSML#Create_SML_message
 
 To create structured email messages, simply use the generator to create a MIME message with structured data included in the HTML body via `<script>` tag:
 
@@ -57,6 +57,75 @@ public class Example {
     }
 }
 ```
+
+Another way to create a structured email is to create it as an object that is used to create the email by using the message builder.
+This can be done by creating a new class in [`test/com/audriga/jakarta/sml/data`](test/com/audriga/jakarta/sml/data) that extends [`AbstractEmail`](test/com/audriga/jakarta/sml/data/AbstractEmail.java) (see [`ExampleEmail.java`](test/com/audriga/jakarta/sml/data/ExampleEmail.java)).
+The email can then be created and sent by using the [`EmailSenderTest.sendEmail()`](test/com/audriga/jakarta/sml/extension/sender/EmailSenderTest.java#L28-L79) method.
+
+See example email:
+
+```java
+package com.audriga.jakarta.sml.data;
+
+import com.audriga.jakarta.sml.TestUtils;
+import com.audriga.jakarta.sml.structureddata.JsonLdWrapper;
+import jakarta.activation.FileDataSource;
+
+import java.net.URISyntaxException;
+
+public class ExampleEmail extends AbstractEmail {
+
+    public ExampleEmail() {
+        super(
+                "Event Reservation Confirmation\n\n" +
+                "Dear Noah Baumbach,\n\n" +
+                "Thank you for your reservation. Here are the details:\n\n" +
+                "Reservation Number: MBE12345\n" +
+                "Event Name: Make Better Email 2024\n" +
+                "Start Date: 2024-10-30\n" +
+                "Location:\n" +
+                "    Isode Ltd\n" +
+                "    14 Castle Mews\n" +
+                "    Hampton TW12 2NP\n" +
+                "    UK\n\n" +
+                "We look forward to seeing you at the event!\n\n" +
+                "Best regards,\n" +
+                "The Event Team",
+                "Make Email Better Again!",
+
+                TestUtils.readResource("html-body/simple-body.html"),
+
+                "inline",
+
+                false
+                );
+    }
+
+
+    @Override
+    public JsonLdWrapper getJson() {
+        return null;
+    }
+
+    @Override
+    public JsonLdWrapper getJsonArray() {
+        return null;
+    }
+
+    @Override
+    public FileDataSource getAttachment() throws URISyntaxException {
+        return null;
+    }
+
+    @Override
+    public String getAttachmentName() {
+        return null;
+    }
+}
+
+```
+
+For the email type you can specify in the constructor if you want to send an inline/html/'Multipart/alternative'/'Multipart/related' version by changing the builder type to: "inline"/"html"/"alternative"/"related".
 
 ### Parsing Structured Email messages
 
