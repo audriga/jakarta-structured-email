@@ -133,4 +133,19 @@ public class EmailSenderTest {
     public void testSendJSONLDInlineExample() throws MessagingException, URISyntaxException {
         sendEmail(new JsonLdInlineEmail());
     }
+
+    @Test
+    public void testSendJSONLDRecipeExample() throws MessagingException, URISyntaxException {
+        sendEmail(new JsonLdRecipeEmail());
+    }
+
+    @Test
+    public void testSendJSONLDDefaultExample() throws MessagingException, URISyntaxException {
+        sendEmail(new JsonLdDefaultEmail());
+    }
+
+    @Test
+    public void testSendJSONLDServiceExample() throws MessagingException, URISyntaxException {
+        sendEmail(new JsonLdServiceEmail());
+    }
 }

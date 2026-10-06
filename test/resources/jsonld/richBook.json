@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Book",
+  "name": "The Quiet Harbor",
+  "image": "https://picsum.photos/seed/quietharbor/400/300",
+  "description": "A slow-burn coastal mystery about a lighthouse keeper who finds a stranger's logbook.",
+  "author": { "@type": "Person", "name": "Elin Marsh" },
+  "datePublished": "2024-09-03",
+  "isbn": "978-0-000000-01-2",
+  "numberOfPages": 312,
+  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.3", "reviewCount": "89" },
+  "url": "https://example.com/books/the-quiet-harbor"
+}

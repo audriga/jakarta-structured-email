@@ -1,0 +1,8 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Recipe",
+  "name": "Butter Toast",
+  "description": "Simple buttered toast.",
+  "recipeYield": 1,
+  "totalTime": "PT3M"
+}

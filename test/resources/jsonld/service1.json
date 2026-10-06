@@ -1,0 +1,16 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Service",
+  "name": "API Service",
+  "status": "operational",
+  "description": "Main API is running.",
+  "statusEvents": [
+    {
+      "@type": "Event",
+      "name": "Scheduled maintenance",
+      "startDate": "2025-07-10T02:00Z",
+      "endDate": "2025-07-10T04:00Z",
+      "description": "Brief maintenance window for certificate rotation. No downtime expected."
+    }
+  ]
+}
